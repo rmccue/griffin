@@ -25,7 +25,16 @@ module.exports = merge.smart(baseConfig, {
                     presets: [
                         [
                             '@babel/preset-env',
-                            { targets: { browsers: 'chrome 80' } }
+                            {
+                                targets: {
+                                    browsers: 'chrome 80 ',
+                                },
+                                include: [
+                                    // Some other loader apparently doesn't
+                                    // recognise ?. chaining, so compile anyway.
+                                    'proposal-optional-chaining',
+                                ],
+                            }
                         ],
                         '@babel/preset-typescript',
                         '@babel/preset-react'
