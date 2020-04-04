@@ -3,8 +3,8 @@ import findKey from 'lodash/findKey';
 import sortBy from 'lodash/sortBy';
 
 import App from './app';
-import { connect, MailerOptions, FlagUpdateEvent } from './mailer';
-import { Message, Thread, PartialMessage } from '../common/types';
+import { Mailer, FlagUpdateEvent } from './mailer';
+import { AccountOptions, Message, Thread, PartialMessage } from '../common/types';
 
 type Mailbox = {
 	threads: Thread[];

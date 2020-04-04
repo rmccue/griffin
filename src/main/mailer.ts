@@ -13,32 +13,7 @@ import log from './log';
 import { decodeMessageBody, findContentParts } from './mail/content';
 import { messageFromImap, parseFlags } from './mail/message';
 import { summarizeBodyPart } from './mail/summary';
-import { Message, MessageDetails, MessageFlags, PartialMessage, Thread } from '../common/types';
-
-interface ImapOptions {
-	service: 'imap';
-	auth: {
-		user: string;
-		pass: string;
-	}
-	host: string;
-	port: number;
-	secure: boolean;
-}
-
-interface GmailOptions {
-	service: 'gmail';
-	auth: {
-		user: string;
-		pass: string;
-		// token: string;
-	}
-}
-
-interface OtherMailerOptions {
-}
-
-export type MailerOptions = ( ImapOptions | GmailOptions ) & OtherMailerOptions;
+import { ConnectionOptions, Message, MessageDetails, MessageFlags, PartialMessage, Thread } from '../common/types';
 
 export interface FlagUpdateEvent {
 	mailbox: string;
@@ -54,7 +29,7 @@ export class Mailer extends EventEmitter {
 	imap: ImapFlow;
 	lock: MailboxLockObject | null = null;
 
-	constructor( opts: MailerOptions ) {
+	constructor( opts: ConnectionOptions ) {
 		super();
 
 		let serviceArgs: ImapFlowOptions;
@@ -323,8 +298,4 @@ export class Mailer extends EventEmitter {
 			} );
 		} );
 	}
-}
-
-export function connect( opts: MailerOptions ) : Mailer {
-	return new Mailer( opts );
 }

@@ -59,3 +59,33 @@ export interface ThreadResponse {
 	messages?: Message[];
 	nextCursor: number | null;
 }
+
+interface ImapOptions {
+	service: 'imap';
+	auth: {
+		user: string;
+		pass: string;
+	}
+	host: string;
+	port: number;
+	secure: boolean;
+}
+
+interface GmailOptions {
+	service: 'gmail';
+	auth: {
+		user: string;
+		pass: string;
+		// token: string;
+	}
+}
+
+interface OtherConnectionOptions {
+}
+
+export type ConnectionOptions = ( ImapOptions | GmailOptions ) & OtherConnectionOptions;
+
+export interface AccountOptions {
+	id: string;
+	connection: ConnectionOptions;
+}
