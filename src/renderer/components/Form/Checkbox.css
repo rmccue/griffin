@@ -1,0 +1,47 @@
+.Checkbox {
+	display: inline-block;
+	position: relative;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.Checkbox__input {
+	position: absolute;
+	height: 1em;
+	width: 1em;
+	opacity: 0;
+	padding: 0;
+	margin: 0;
+}
+
+.Checkbox__text {
+	display: block;
+	text-indent: -9999px;
+	height: 1em;
+	width: 1em;
+	position: relative;
+}
+
+.Checkbox__text::before {
+	position: absolute;
+	display: block;
+	content: " ";
+	height: 100%;
+	width: 100%;
+	border: 1px solid var( --color-primary );
+	border-radius: 4px;
+
+	transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.Checkbox__input:checked + .Checkbox__text::before {
+	background: var( --color-primary );
+}
+
+.Checkbox__input:active + .Checkbox__text::before {
+	opacity: 0.4;
+}
+
+.Checkbox__input:focus + .Checkbox__text::before {
+	box-shadow: 0 0 8px -2px var( --color-primary );
+}

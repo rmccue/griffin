@@ -1,0 +1,42 @@
+.ButtonList {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	font-size: 1.2em;
+}
+
+.ButtonList__button {
+	color: inherit;
+	background: var( --color-prefs-nav-background );
+	border: none;
+	font: inherit;
+
+	text-align: left;
+	width: 100%;
+	display: grid;
+	grid-template-columns: 2.2em auto;
+	align-items: center;
+
+	padding: 0.5em 1em;
+}
+
+.ButtonList__button:hover {
+	background: var( --color-prefs-nav-hover-background );
+}
+
+.ButtonList__button:active {
+	outline: 0;
+	background: var( --color-prefs-nav-active-background );
+}
+
+.ButtonList__button:focus {
+	outline: 0;
+}
+
+.ButtonList__button--selected span {
+	font-weight: 600;
+}
+
+.ButtonList__button .Icon {
+	font-size: 1.5em;
+}

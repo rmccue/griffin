@@ -1,0 +1,72 @@
+.Sidebar-Folder__main {
+	display: grid;
+	grid-template-columns: 1em auto;
+	column-gap: 0.25em;
+	align-items: center;
+	line-height: 2em;
+}
+
+.Sidebar-Folder__main .Icon {
+	display: inline-block;
+	margin-right: 0.5em;
+	width: 1.5em;
+	text-align: center;
+}
+
+.Sidebar-Folder a {
+	grid-column: 2;
+	padding-left: 1.25em;
+	margin-left: -1.25em;
+
+	color: inherit;
+	background: var( --color-sidebar-folder-background );
+	text-decoration: none;
+	cursor: default;
+	border-radius: 4px;
+
+	display: grid;
+	grid-template-columns: 2em auto;
+	align-items: center;
+}
+
+.Sidebar-Folder a:hover {
+	background: var( --color-sidebar-folder-hover-background );
+}
+
+.Sidebar-Folder a:focus,
+.Sidebar-Folder a:active {
+	outline: 0;
+	background: var( --color-sidebar-folder-active-background );
+}
+
+.Sidebar-Folder__children {
+	list-style: none;
+	padding: 0;
+	margin: 0 0 0 1.5em;
+
+	height: 0;
+	overflow: hidden;
+	transition: 150ms height;
+}
+
+.Sidebar-Folder__disclosure {
+	background: transparent;
+	border: none;
+	padding: 0;
+	color: #fff;
+	text-align: center;
+	transition: 50ms transform;
+}
+
+.Sidebar-Folder__disclosure:focus,
+.Sidebar-Folder__disclosure:active {
+	outline: 0;
+}
+
+.Sidebar-Folder--expanded > .Sidebar-Folder__main .Sidebar-Folder__disclosure {
+	transform: rotate( 90deg );
+}
+
+.Sidebar-Folder--expanded > .Sidebar-Folder__children {
+	height: auto;
+}

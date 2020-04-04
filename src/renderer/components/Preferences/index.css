@@ -1,0 +1,76 @@
+.Preferences {
+	background: var( --color-secondary );
+	color: #fff;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+	z-index: 10;
+	transform: translate( 0, -100vh );
+	transition: transform 300ms ease-in-out;
+
+	padding-top: 40px;
+	display: grid;
+	grid-template-columns: 15vw auto;
+	column-gap: 2em;
+}
+
+.Preferences__header {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	padding: 6px 7px;
+	-webkit-app-region: drag;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.Preferences--visible {
+	transform: translate( 0, 0 );
+}
+
+.Preferences__sections > ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	font-size: 1.2em;
+}
+
+.Preferences__section-link {
+	color: inherit;
+	background: var( --color-prefs-nav-background );
+	border: none;
+	font: inherit;
+
+	text-align: left;
+	width: 100%;
+	display: grid;
+	grid-template-columns: 2.2em auto;
+	align-items: center;
+
+	padding: 0.5em 1em;
+}
+
+.Preferences__section-link:hover {
+	background: var( --color-prefs-nav-hover-background );
+}
+
+.Preferences__section-link:active {
+	outline: 0;
+	background: var( --color-prefs-nav-active-background );
+}
+
+.Preferences__section-link:focus {
+	outline: 0;
+}
+
+.Preferences__section-link--selected span {
+	font-weight: 600;
+}
+
+.Preferences__section-link .Icon {
+	font-size: 1.5em;
+}

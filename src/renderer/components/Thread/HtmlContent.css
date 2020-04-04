@@ -1,0 +1,9 @@
+.HtmlContent {
+	height: 800px;
+	width: 100%;
+
+	background-color: transparent;
+	border: 0px none transparent;
+	padding: 0px;
+	overflow: hidden;
+}

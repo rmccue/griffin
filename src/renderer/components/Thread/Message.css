@@ -1,0 +1,27 @@
+.Thread-Message {
+	padding: 1em;
+	border-bottom: 1px solid var( --color-hover-shadow );
+}
+
+.Thread-Message__header {
+	display: grid;
+	grid-template-columns: auto max-content;
+	align-items: baseline;
+	margin-bottom: 1em;
+}
+
+.Thread-Message__author {
+	user-select: text;
+}
+
+.Thread-Message__author-name {
+	font-weight: 600;
+}
+
+.Thread-Message__author-email {
+	color: var( --color-text-light );
+}
+
+.Thread-Message__date {
+	font-size: 0.9em;
+}

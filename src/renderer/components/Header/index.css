@@ -1,0 +1,31 @@
+.Header {
+	background: var( --color-header-background );
+	border-bottom: var( --color-header-border-bottom );
+	color: var( --color-header-text );
+	padding: 6px 7px;
+	/* padding-top: 26px; */
+	padding-left: 80px;
+	-webkit-app-region: drag;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	justify-content: space-between;
+	box-shadow: 0 3px 6px var( --color-header-shadow );
+	z-index: 2;
+
+	position: relative;
+}
+
+.Header__user-tools {
+	justify-self: right;
+}
+
+.Header__centered {
+	position: absolute;
+	/* top: 26px; */
+	top: 6px;
+	width: 100%;
+	transition: 300ms padding;
+}
+.Header__centered--sidebar {
+	padding-left: 15vw;
+}

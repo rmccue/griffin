@@ -1,0 +1,10 @@
+/* Native macOS theme */
+:root {
+	/* Header */
+	--color-header-background: linear-gradient( to bottom, #eae9eb 0%, #dcdbdc 100% );
+	--color-header-text: #4b4f56;
+	--color-header-border-bottom: 1px solid #c1c0c2;
+	--color-header-shadow: none;
+	--color-header-button-background: #fff linear-gradient( to bottom, transparent 0%, rgba( 0, 0, 0, 0.05 ) 100% );
+	--color-header-button-border: 1px solid #d3d2d3;
+}

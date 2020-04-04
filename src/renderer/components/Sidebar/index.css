@@ -1,0 +1,18 @@
+.Sidebar {
+	background: var( --color-sidebar-background );
+	color: var( --color-sidebar-text );
+	transition: 300ms margin;
+	overflow: hidden;
+	width: 15vw;
+	margin-left: -15vw;
+}
+
+.Sidebar--visible {
+	margin-left: 0;;
+}
+
+.Sidebar__folders {
+	list-style: none;
+	padding: 1em 0.5em;
+	margin: 0;
+}

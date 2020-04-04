@@ -1,0 +1,59 @@
+.ThreadList-Thread {
+	padding: 0.5em 1em 0.5em 0;
+	background: var( --color-background-content );
+	border-bottom: 1px solid var( --color-border-light );
+
+	display: grid;
+	grid-template-columns: 3em 18% auto minmax( max-content, 6% );
+	align-items: baseline;
+	column-gap: 1em;
+}
+
+.ThreadList-Thread:hover {
+	position: relative;
+	z-index: 1;
+	box-shadow: 0 0 5px var( --color-hover-shadow );
+}
+
+.ThreadList-Thread__select {
+	flex-shrink: 0;
+	padding: 1em;
+}
+
+.ThreadList-Thread__select-text {
+	display: block;
+	text-indent: -9999px;
+}
+
+.ThreadList-Thread__participants {
+	flex-basis: 10em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ThreadList-Thread__message-count {
+	margin-left: 0.5em;
+}
+
+.ThreadList-Thread__summary {
+	flex-grow: 1;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ThreadList-Thread__preview {
+	margin-left: 0.5em;
+	color: var( --color-text-light );
+}
+
+.ThreadList-Thread__datetime {
+	text-align: right;
+}
+
+.ThreadList-Thread--unread .ThreadList-Thread__subject,
+.ThreadList-Thread--unread .ThreadList-Thread__participants,
+.ThreadList-Thread--unread .ThreadList-Thread__datetime {
+	font-weight: bold;
+}

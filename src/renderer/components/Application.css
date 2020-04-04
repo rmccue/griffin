@@ -1,0 +1,24 @@
+.Application {
+	height: 100%;
+	width: 100%;
+
+	display: grid;
+	grid-template:
+		"header header"
+		"sidebar main";
+	grid-template-rows: min-content auto;
+	grid-template-columns: min-content 1fr;
+}
+
+.Application > .Header {
+	grid-area: header;
+}
+
+.Application > .Sidebar {
+	grid-area: sidebar;
+}
+
+.Application > main {
+	grid-area: main;
+	overflow: scroll;
+}
