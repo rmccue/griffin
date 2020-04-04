@@ -1,10 +1,12 @@
 import { combineReducers, AnyAction } from 'redux';
 
 import { Action } from '../../common/actions';
+import accounts from './accounts';
 import messages from './messages';
 import threads from './threads';
 
 const combinedReducers = combineReducers( {
+	accounts,
 	messages,
 	threads,
 

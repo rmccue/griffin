@@ -27,6 +27,14 @@ export default class App {
 
 	async load() {
 		await this.accounts.load();
+
+		this.send( {
+			event: 'dispatch',
+			data: {
+				type: 'LOAD_ACCOUNTS',
+				payload: this.accounts.getData().accounts,
+			},
+		} );
 	}
 
 	createWindow = () => {
