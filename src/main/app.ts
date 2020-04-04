@@ -5,7 +5,7 @@ import * as path from 'path';
 import * as url from 'url';
 
 import Account from './account';
-import { connect } from './mailer';
+import AccountManager from './accountmanager';
 import { BackendInitiatedEvent, FrontendInitiatedEvent } from '../common/ipc';
 
 const STORAGE_KEY = 'store';
@@ -13,16 +13,20 @@ const STORAGE_KEY = 'store';
 const log = debug( 'app' );
 
 export default class App {
-	// accounts: { [k: string]: Account } = {};
-	// currentAccount?: Account;
-	account?: Account;
-	mailer?: ReturnType<typeof connect>;
+	accounts: AccountManager;
 	isReady: boolean = false;
 	queue: BackendInitiatedEvent[] = [];
 	win!: BrowserWindow | null;
 
 	constructor() {
+		this.accounts = new AccountManager( this );
+
+		this.load();
 		this.createWindow();
+	}
+
+	async load() {
+		await this.accounts.load();
 	}
 
 	createWindow = () => {
@@ -75,8 +79,6 @@ export default class App {
 		// Load configuration from storage immediately.
 		this.onReload();
 
-		this.account = new Account( this );
-
 		// Begin loading messages immediately.
 		this.loadMessages();
 
@@ -98,11 +100,12 @@ export default class App {
 	}
 
 	async disconnectImap() {
-		if ( ! this.account ) {
+		const selected = this.accounts.selected();
+		if ( ! selected ) {
 			return;
 		}
 
-		await this.account.disconnect();
+		await selected.disconnect();
 	}
 
 	onActivate() {
@@ -149,12 +152,13 @@ export default class App {
 	}
 
 	loadMessages = async () => {
-		if ( ! this.account ) {
+		const selected = this.accounts.selected();
+		if ( ! selected ) {
 			return;
 		}
 
-		await this.account.connect();
-		this.account.queryThreads();
+		await selected.connect();
+		selected.queryThreads();
 	}
 
 	send( event: BackendInitiatedEvent ) {
@@ -189,6 +193,7 @@ export default class App {
 						console.warn( err );
 					}
 				} );
+				this.accounts.save();
 
 				break;
 
@@ -201,11 +206,11 @@ export default class App {
 				break;
 
 			case 'queryThreadDetails':
-				this.account?.queryThreadDetails( event.data.thread );
+				this.accounts.selected()?.queryThreadDetails( event.data.thread );
 				break;
 
 			case 'setRead':
-				this.account?.setRead( event.data.messages );
+				this.accounts.selected()?.setRead( event.data.messages );
 				break;
 
 			default:

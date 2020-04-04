@@ -15,23 +15,21 @@ const log = debug( 'account' );
 export default class Account {
 	app: App;
 	mailboxes: { [ k: string ]: Mailbox } = {};
-	mailer: ReturnType<typeof connect>;
+	mailer: Mailer;
+	options: AccountOptions;
 
 	// Map of unique message ID => UID
 	idMap: { [ k: string ]: number } = {};
 
-	constructor( app: App ) {
+	constructor( app: App, options: AccountOptions ) {
 		this.app = app;
-		this.mailer = connect( {
-			service: 'gmail',
-			// host: 'imap.gmail.com',
-			// port: 993,
-			// secure: true,
-			auth: {
-				user: 'me@ryanmccue.info',
-			},
-		} );
+		this.options = options;
+		this.mailer = new Mailer( options.connection );
 		this.mailer.on( 'flags', this.onFlags );
+	}
+
+	get id() {
+		return this.options.id;
 	}
 
 	async connect() {
