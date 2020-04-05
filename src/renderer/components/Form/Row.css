@@ -1,0 +1,11 @@
+.Form-Row {
+	display: grid;
+	grid-template-columns: 2fr 3fr;
+	column-gap: 1em;
+	margin-bottom: 0.5em;
+	align-items: baseline;
+}
+
+.Form-Row > label {
+	text-align: right;
+}

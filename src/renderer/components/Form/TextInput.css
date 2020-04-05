@@ -1,0 +1,13 @@
+.Form-TextInput {
+	padding: 0.5em;
+	color: inherit;
+	font: inherit;
+	background: rgba( 255, 255, 255, 0.05 );
+	border: none;
+	border-radius: 4px;
+}
+
+.Form-TextInput:focus {
+	background: rgba( 255, 255, 255, 0.1 );
+	outline: none;
+}

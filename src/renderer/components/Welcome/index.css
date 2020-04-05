@@ -1,0 +1,13 @@
+.Welcome {
+	background: var( --color-primary );
+	color: var( --color-quaternary );
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 26px;
+	height: 100vh;
+}
+
+.Welcome__step {
+	width: 500px;
+}
