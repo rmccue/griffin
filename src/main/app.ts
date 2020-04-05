@@ -6,7 +6,7 @@ import * as url from 'url';
 
 import Account from './account';
 import AccountManager from './accountmanager';
-import { BackendInitiatedEvent, FrontendInitiatedEvent } from '../common/ipc';
+import { BackendInitiatedEvent, FrontendInitiatedEvent, Invokable } from '../common/ipc';
 
 const STORAGE_KEY = 'store';
 
@@ -225,6 +225,20 @@ export default class App {
 				// Force exhaustive type checks.
 				const _exhaustiveCheck: never = event;
 				console.warn( `Unknown event ${ _exhaustiveCheck }` );
+				break;
+		}
+	}
+
+	async invoke( command: Invokable ) {
+		log( `invoking ${ command.command }` );
+
+		switch ( command.command ) {
+			case 'verifyAccount':
+				return await this.accounts.verify( command.data );
+
+			default:
+				// const _exhaustiveCheck: never = command;
+				// throw new Error( `Unknown command ${ _exhaustiveCheck }` );
 				break;
 		}
 	}

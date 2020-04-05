@@ -1,5 +1,5 @@
 import { Action } from './actions';
-import { Message } from './types';
+import { ConnectionOptions, Message } from './types';
 
 export interface DispatchEvent {
 	event: 'dispatch';
@@ -52,3 +52,10 @@ export interface SaveEvent {
 }
 
 export type FrontendInitiatedEvent = QueryEvent | QueryThreadDetails | ReloadEvent | SetReadEvent | SaveEvent;
+
+export interface VerifyAccountCommand {
+	command: 'verifyAccount',
+	data: ConnectionOptions,
+}
+
+export type Invokable = VerifyAccountCommand;

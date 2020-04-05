@@ -1,7 +1,7 @@
 import Account from './account';
 import App from './app';
 import store from './store';
-import { AccountOptions } from '../common/types';
+import { AccountConnectionStatus, AccountOptions, ConnectionOptions } from '../common/types';
 
 const ACCOUNTS_KEY = 'accounts';
 
@@ -56,6 +56,39 @@ export default class AccountManager {
 
 	add( account: Account ) {
 		this.data[ account.id ] = account;
+	}
+
+	async verify( options: ConnectionOptions ): Promise<AccountConnectionStatus> {
+		const account = new Account( this.app, {
+			id: '__tmp',
+			connection: options,
+		} );
+
+		try {
+			await account.connect();
+		} catch ( err ) {
+			if ( err.authenticationFailed ) {
+				return {
+					error: {
+						type: 'authentication_failed',
+					}
+				};
+			}
+
+			console.log( err );
+			return {
+				error: {
+					type: 'unknown',
+				},
+			};
+		} finally {
+			// Close any lingering connections.
+			account.disconnect();
+		}
+
+		return {
+			error: false,
+		};
 	}
 
 	select( id: string ) {

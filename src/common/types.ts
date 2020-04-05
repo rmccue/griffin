@@ -89,3 +89,9 @@ export interface AccountOptions {
 	id: string;
 	connection: ConnectionOptions;
 }
+
+export interface AccountConnectionStatus {
+	error: false | {
+		type: 'authentication_failed' | 'unknown'
+	};
+}

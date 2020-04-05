@@ -1,11 +1,15 @@
 import { ipcRenderer } from 'electron';
 
 import store from './store';
-import { BackendInitiatedEvent, FrontendInitiatedEvent } from '../common/ipc';
-import { Message } from '../common/types';
+import { BackendInitiatedEvent, FrontendInitiatedEvent, Invokable } from '../common/ipc';
+import { AccountConnectionStatus, ConnectionOptions, Message } from '../common/types';
 
 function send( event: FrontendInitiatedEvent ) {
 	ipcRenderer.send( event.event, 'data' in event ? event.data : null );
+}
+
+async function invoke( command: Invokable ) {
+	return await ipcRenderer.invoke( command.command, command.data );
 }
 
 type Resolver = ( ( value: number ) => void ) | null;
@@ -104,4 +108,11 @@ export function getWebviewHeight( id: number ) {
 		resolve,
 	};
 	return promise;
+}
+
+export async function verifyAccount( options: ConnectionOptions ): Promise<AccountConnectionStatus> {
+	return await invoke( {
+		command: 'verifyAccount',
+		data: options,
+	} );
 }

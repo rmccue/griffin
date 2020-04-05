@@ -1,7 +1,7 @@
 import { app, ipcMain, shell } from 'electron';
 
 import App from './app';
-import { FrontendInitiatedEvent } from '../common/ipc';
+import { FrontendInitiatedEvent, Invokable } from '../common/ipc';
 
 // Enable reloading.
 // try {
@@ -97,6 +97,20 @@ Object.keys( eventTypes ).forEach( event => {
 	ipcMain.on( event, ( _, data ) => {
 		appHandler?.receive( {
 			event: event as EventType,
+			data,
+		} );
+	} );
+} );
+
+type InvokableCommand = Invokable["command"];
+type InvokableCommandObj = Record<InvokableCommand, boolean>;
+const invokableCommands: InvokableCommandObj = {
+	verifyAccount: true,
+};
+Object.keys( invokableCommands ).forEach( command => {
+	ipcMain.handle( command, async ( _, data ) => {
+		return await appHandler?.invoke( {
+			command: command as InvokableCommand,
 			data,
 		} );
 	} );
