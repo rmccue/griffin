@@ -86,6 +86,7 @@ app.on( 'web-contents-created', ( _, contents ) => {
 type EventType = FrontendInitiatedEvent["event"];
 type EventTypeObj = Record<EventType, boolean>;
 const eventTypes: EventTypeObj = {
+	addAccount: true,
 	query: true,
 	queryThreadDetails: true,
     reload: true,

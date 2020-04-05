@@ -1,5 +1,13 @@
 import { AccountOptions } from '../types';
 
+export interface AddAccountAction {
+	type: 'ADD_ACCOUNT',
+	payload: {
+		id: string;
+		options: AccountOptions;
+	};
+}
+
 export interface LoadAccountsAction {
 	type: 'LOAD_ACCOUNTS';
 	payload: {
@@ -7,4 +15,4 @@ export interface LoadAccountsAction {
 	}
 }
 
-export type AccountsAction = LoadAccountsAction;
+export type AccountsAction = AddAccountAction | LoadAccountsAction;

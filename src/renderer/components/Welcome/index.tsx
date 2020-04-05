@@ -2,11 +2,20 @@ import React, { useState } from 'react';
 
 import ConnectImap from './ConnectImap';
 import ButtonList, { Button } from '../ButtonList';
+import { ConnectionOptions, AccountOptions } from '../../../common/types';
+import { addAccount } from '../../connector';
 
 import './index.css';
 
 export default function Welcome() {
 	const [ type, setType ] = useState<string | null>( null );
+
+	const onAdd = ( connection: ConnectionOptions ) => {
+		const options: AccountOptions = {
+			connection,
+		};
+		addAccount( options );
+	}
 
 	return (
 		<main className="Welcome">
@@ -34,7 +43,7 @@ export default function Welcome() {
 					<p>We'll need your account details too.</p>
 
 					<ConnectImap
-						onCreate={ con => console.log( con ) }
+						onCreate={ onAdd }
 					/>
 				</div>
 			) }

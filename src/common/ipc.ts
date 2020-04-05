@@ -1,5 +1,5 @@
 import { Action } from './actions';
-import { ConnectionOptions, Message } from './types';
+import { AccountOptions, ConnectionOptions, Message } from './types';
 
 export interface DispatchEvent {
 	event: 'dispatch';
@@ -23,6 +23,11 @@ export interface WebviewHeightEvent {
 }
 
 export type BackendInitiatedEvent = DispatchEvent | HistoryStateEvent | WebviewHeightEvent;
+
+export interface AddAccount {
+	event: 'addAccount',
+	data: AccountOptions,
+}
 
 export interface QueryEvent {
 	event: 'query',
@@ -51,7 +56,13 @@ export interface SaveEvent {
 	data: object;
 }
 
-export type FrontendInitiatedEvent = QueryEvent | QueryThreadDetails | ReloadEvent | SetReadEvent | SaveEvent;
+export type FrontendInitiatedEvent =
+	AddAccount |
+	QueryEvent |
+	QueryThreadDetails |
+	ReloadEvent |
+	SetReadEvent |
+	SaveEvent;
 
 export interface VerifyAccountCommand {
 	command: 'verifyAccount',

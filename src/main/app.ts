@@ -7,6 +7,7 @@ import * as url from 'url';
 import Account from './account';
 import AccountManager from './accountmanager';
 import { BackendInitiatedEvent, FrontendInitiatedEvent, Invokable } from '../common/ipc';
+import { AccountOptions } from '../common/types';
 
 const STORAGE_KEY = 'store';
 
@@ -159,6 +160,22 @@ export default class App {
 		})
 	}
 
+	addAccount( options: AccountOptions ) {
+		const account = new Account( this, options );
+		const id = this.accounts.add( account );
+
+		this.send( {
+			event: 'dispatch',
+			data: {
+				type: 'ADD_ACCOUNT',
+				payload: {
+					id,
+					options,
+				},
+			}
+		} );
+	}
+
 	loadMessages = async () => {
 		const selected = this.accounts.selected();
 		if ( ! selected ) {
@@ -195,6 +212,10 @@ export default class App {
 		log( `received ${ event.event }` );
 
 		switch ( event.event ) {
+			case 'addAccount':
+				this.addAccount( event.data );
+				break;
+
 			case 'save':
 				storage.set( STORAGE_KEY, event.data, err => {
 					if ( err ) {

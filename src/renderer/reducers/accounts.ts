@@ -15,6 +15,15 @@ const DEFAULT_STATE: AccountsState = {
 
 export default function accounts( state: AccountsState = DEFAULT_STATE, action: AccountsAction ) {
 	switch ( action.type ) {
+		case 'ADD_ACCOUNT':
+			return {
+				...state,
+				accounts: {
+					...state.accounts,
+					[ action.payload.id ]: action.payload.options,
+				},
+			};
+
 		case 'LOAD_ACCOUNTS':
 			return {
 				...state,

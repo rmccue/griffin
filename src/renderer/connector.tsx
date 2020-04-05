@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron';
 
 import store from './store';
 import { BackendInitiatedEvent, FrontendInitiatedEvent, Invokable } from '../common/ipc';
-import { AccountConnectionStatus, ConnectionOptions, Message } from '../common/types';
+import { AccountConnectionStatus, AccountOptions, ConnectionOptions, Message } from '../common/types';
 
 function send( event: FrontendInitiatedEvent ) {
 	ipcRenderer.send( event.event, 'data' in event ? event.data : null );
@@ -54,6 +54,13 @@ export function receive( event: BackendInitiatedEvent ) {
 
 export function _connect() {
 	return true;
+}
+
+export function addAccount( options: AccountOptions ) {
+	send( {
+		event: 'addAccount',
+		data: options,
+	} );
 }
 
 export function query() {
