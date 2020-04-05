@@ -164,6 +164,9 @@ export default class App {
 		const account = new Account( this, options );
 		const id = this.accounts.add( account );
 
+		// todo: have this driven by the renderer.
+		this.accounts.select( id );
+
 		this.send( {
 			event: 'dispatch',
 			data: {
