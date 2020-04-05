@@ -1,8 +1,11 @@
+import { v5 } from 'uuid';
+
 import Account from './account';
 import App from './app';
 import store from './store';
 import { AccountConnectionStatus, AccountOptions, ConnectionOptions } from '../common/types';
 
+const UUID_NAMESPACE = 'de4e7c90-95ed-47d2-8c2f-10a5c08c1991';
 const ACCOUNTS_KEY = 'accounts';
 
 type AccountMap = {
@@ -55,12 +58,13 @@ export default class AccountManager {
 	}
 
 	add( account: Account ) {
-		this.data[ account.id ] = account;
+		const id = v5( account.options.connection.auth.user, UUID_NAMESPACE );
+		this.data[ id ] = account;
+		return id;
 	}
 
 	async verify( options: ConnectionOptions ): Promise<AccountConnectionStatus> {
 		const account = new Account( this.app, {
-			id: '__tmp',
 			connection: options,
 		} );
 

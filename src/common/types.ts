@@ -86,7 +86,6 @@ interface OtherConnectionOptions {
 export type ConnectionOptions = ( ImapOptions | GmailOptions ) & OtherConnectionOptions;
 
 export interface AccountOptions {
-	id: string;
 	connection: ConnectionOptions;
 }
 

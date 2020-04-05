@@ -28,10 +28,6 @@ export default class Account {
 		this.mailer.on( 'flags', this.onFlags );
 	}
 
-	get id() {
-		return this.options.id;
-	}
-
 	async connect() {
 		return await this.mailer.connect();
 	}
