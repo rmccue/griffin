@@ -35,7 +35,11 @@
 	/* Buttons */
 	--color-button-background: rgba( 255, 255, 255, 0.1 );
 	--color-button-active-background: rgba( 255, 255, 255, 0.2 );
-	--color-button-hover-background: rgba( 255, 255, 255, 0.1 );
+	--color-button-hover-background: rgba( 255, 255, 255, 0.15 );
+	/* Primary = --color-primary with increased saturation and lightness */
+	--color-button-primary-background: hsl( 201, 73%, 40% );
+	--color-button-primary-active-background: hsl( 201, 73%, 38% );
+	--color-button-primary-hover-background: hsl( 201, 73%, 45% );
 
 	/*
 	  DERIVED VARIABLES

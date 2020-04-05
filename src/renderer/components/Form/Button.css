@@ -1,0 +1,40 @@
+.Form-Button {
+	font: inherit;
+	background: var( --color-button-background );
+	border: none;
+	color: inherit;
+	border-radius: 4px;
+	transition: 50ms opacity;
+	padding: 0.5em;
+}
+
+.Form-Button:hover {
+	background: var( --color-button-hover-background );
+}
+
+.Form-Button:active {
+	outline: 0;
+	background: var( --color-button-active-background );
+}
+
+.Form-Button:focus {
+	outline: 0;
+}
+
+.Form-Button:disabled {
+	opacity: 0.2;
+	background: transparent;
+}
+
+.Form-Button__type-primary {
+	background: var( --color-button-primary-background );
+	color: #fff;
+}
+
+.Form-Button__type-primary:hover {
+	background: var( --color-button-primary-hover-background );
+}
+
+.Form-Button__type-primary:active {
+	background: var( --color-button-primary-active-background );
+}

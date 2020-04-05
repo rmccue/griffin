@@ -1,0 +1,8 @@
+.Form-ButtonRow {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.Form-ButtonRow > .Form-Button {
+	margin-left: 0.5em;
+}
