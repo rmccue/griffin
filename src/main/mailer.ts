@@ -26,6 +26,7 @@ export declare interface Mailer {
 }
 
 export class Mailer extends EventEmitter {
+	connected: boolean = false;
 	imap: ImapFlow;
 	lock: MailboxLockObject | null = null;
 
@@ -69,11 +70,19 @@ export class Mailer extends EventEmitter {
 	async connect() {
 		// Wait until client connects and authorizes
 		await this.imap.connect();
+		this.connected = true;
 	}
 
 	async disconnect() {
+		if ( ! this.connected ) {
+			// Clean up any sockets.
+			this.imap.close();
+			return;
+		}
+
 		// log out and close connection
 		await this.imap.logout();
+		this.connected = false;
 	}
 
 	attachEvents() {
