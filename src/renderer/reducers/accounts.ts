@@ -28,6 +28,7 @@ export default function accounts( state: AccountsState = DEFAULT_STATE, action: 
 			return {
 				...state,
 				loading: false,
+				accounts: action.payload,
 			};
 
 		default:
