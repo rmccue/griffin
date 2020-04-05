@@ -46,6 +46,7 @@ export default function Welcome() {
 					<p>We'll need your account details too.</p>
 
 					<ConnectImap
+						onCancel={ () => setType( null ) }
 						onCreate={ onAdd }
 					/>
 				</div>

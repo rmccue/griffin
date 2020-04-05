@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 
+import Button from '../Form/Button';
+import ButtonRow from '../Form/ButtonRow';
 import FormRow from '../Form/Row';
 import TextInput from '../Form/TextInput';
 import { verifyAccount } from '../../connector';
 import { ConnectionOptions } from '../../../common/types';
 
 interface Props {
+	onCancel?: () => void;
 	onCreate( options: ConnectionOptions ): void;
 }
 
@@ -76,16 +79,30 @@ export default function ConnectImap( props: Props ) {
 				/>
 			</FormRow>
 
-			{ error && (
-				<p>{ error }</p>
-			) }
-
 			{ verifying ? (
 				<p>Verifying…</p>
 			) : (
-				<button type="submit">
-					Sign In
-				</button>
+				<ButtonRow>
+					{ props.onCancel && (
+						<Button
+							submit={ false }
+							onClick={ props.onCancel }
+						>
+							Cancel
+						</Button>
+					) }
+
+					<Button
+						submit
+						type="primary"
+					>
+						Sign In
+					</Button>
+				</ButtonRow>
+			) }
+
+			{ error && (
+				<p>{ error }</p>
 			) }
 		</form>
 	);
