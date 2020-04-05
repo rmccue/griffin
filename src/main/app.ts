@@ -177,6 +177,8 @@ export default class App {
 				},
 			}
 		} );
+
+		this.accounts.save();
 	}
 
 	loadMessages = async () => {
