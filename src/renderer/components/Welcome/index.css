@@ -9,5 +9,6 @@
 }
 
 .Welcome__step {
+	min-height: 40vh;
 	width: 500px;
 }
