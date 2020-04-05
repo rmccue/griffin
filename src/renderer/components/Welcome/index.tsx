@@ -1,3 +1,4 @@
+import sfsymbols from '@rmccue/sfsymbols';
 import React, { useState } from 'react';
 
 import ConnectImap from './ConnectImap';
@@ -22,17 +23,19 @@ export default function Welcome() {
 			{ ( ! type ) ? (
 				<div className="Welcome__step">
 					<h1>Welcome!</h1>
-					<p>To start, add your first account ({ type }).</p>
+					<p>To start, add your first account.</p>
 
 					<ButtonList>
 						<Button
-							icon={ '' }
+							icon={ sfsymbols['envelope.fill'] }
 							title="Gmail"
+							withArrow
 							onSelect={ () => setType( 'gmail' ) }
 						/>
 						<Button
-							icon={ '' }
+							icon={ sfsymbols['envelope.fill'] }
 							title="Other IMAP server"
+							withArrow
 							onSelect={ () => setType( 'imap' ) }
 						/>
 					</ButtonList>

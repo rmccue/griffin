@@ -33,6 +33,10 @@
 	outline: 0;
 }
 
+.ButtonList__button--with-arrow {
+	grid-template-columns: 2.2em auto 2.2em;
+}
+
 .ButtonList__button--selected span {
 	font-weight: 600;
 }
