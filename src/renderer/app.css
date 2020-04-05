@@ -33,7 +33,7 @@
 	--color-text-light: var( --color-tertiary );
 
 	/* Buttons */
-	--color-button-background: transparent;
+	--color-button-background: rgba( 255, 255, 255, 0.1 );
 	--color-button-active-background: rgba( 255, 255, 255, 0.2 );
 	--color-button-hover-background: rgba( 255, 255, 255, 0.1 );
 
@@ -49,7 +49,7 @@
 	--color-header-text: var( --color-quaternary );
 	--color-header-border-bottom: none;
 	--color-header-shadow: rgba( 0, 0, 0, 0.2 );
-	--color-header-button-background: var( --color-button-background );
+	--color-header-button-background: transparent;
 	--color-header-button-active-background: var( --color-button-active-background );
 	--color-header-button-hover-background: var( --color-button-hover-background );
 	--color-header-button-border: none;
@@ -57,13 +57,13 @@
 	/* Sidebar */
 	--color-sidebar-background: var( --color-secondary );
 	--color-sidebar-text: #fff;
-	--color-sidebar-folder-background: var( --color-button-background );
+	--color-sidebar-folder-background: transparent;
 	--color-sidebar-folder-active-background: var( --color-button-active-background );
 	--color-sidebar-folder-hover-background: var( --color-button-hover-background );
 
 	/* Preferences */
 	--color-prefs-background: var( --color-primary );
-	--color-prefs-nav-background: var( --color-button-background );
+	--color-prefs-nav-background: transparent;
 	--color-prefs-nav-active-background: var( --color-button-active-background );
 	--color-prefs-nav-hover-background: var( --color-button-hover-background );
 }
