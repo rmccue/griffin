@@ -35,7 +35,7 @@ export default class AccountManager {
 		}
 
 		for ( const id of Object.keys( data.accounts ) ) {
-			const account = new Account( this.app, data[ id ] );
+			const account = new Account( this.app, data.accounts[ id ] );
 			this.data[ id ] = account;
 		}
 		this.selectedId = data.selected;
