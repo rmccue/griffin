@@ -36,6 +36,12 @@ export default class App {
 				payload: this.accounts.getData().accounts,
 			},
 		} );
+
+		// Load configuration from storage immediately.
+		this.onReload();
+
+		// Begin loading messages immediately.
+		this.loadMessages();
 	}
 
 	createWindow = () => {
@@ -84,12 +90,6 @@ export default class App {
 		if ( ! this.win ) {
 			return;
 		}
-
-		// Load configuration from storage immediately.
-		this.onReload();
-
-		// Begin loading messages immediately.
-		this.loadMessages();
 
 		this.win.webContents.once( 'dom-ready', () => {
 			// Open DevTools, see https://github.com/electron/electron/issues/12438 for why we wait for dom-ready
