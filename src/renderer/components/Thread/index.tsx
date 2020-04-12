@@ -64,6 +64,7 @@ export function Thread( props: AllProps ) {
 						title="Archive message"
 						onClick={ onArchive }
 					/>
+					{/*
 					<ToolbarButton
 						icon={ sfsymbols['trash.fill'] }
 						title="Delete message"
@@ -74,6 +75,7 @@ export function Thread( props: AllProps ) {
 						title="Mark as spam"
 						onClick={ () => console.log( 'spam' ) }
 					/>
+					*/}
 				</Toolbar>
 			</Fill>
 
