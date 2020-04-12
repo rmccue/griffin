@@ -79,6 +79,19 @@ app.on( 'web-contents-created', ( _, contents ) => {
 			},
 		} );
 	} );
+
+	// Insert default CSS.
+	contents.on( 'did-finish-load', () => {
+		contents.insertCSS( `
+			html {
+				font: 0.875em/1.5 Helvetica, sans-serif;
+				color: #333;
+			}
+			body {
+				margin: 0;
+			}
+		` );
+	} );
 } );
 
 // Build type-safe object of events.
