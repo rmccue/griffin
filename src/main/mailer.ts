@@ -20,9 +20,17 @@ export interface FlagUpdateEvent {
 	uid: number;
 	flags: MessageFlags;
 }
+
+export interface NewMessagesEvent {
+	mailbox: string;
+	messages: Message[];
+}
+
 export declare interface Mailer {
 	on( event: 'flags', listener: ( event: FlagUpdateEvent ) => void ): this;
 	once( event: 'flags', listener: ( event: FlagUpdateEvent ) => void ): this;
+	on( event: 'newMessages', listener: ( event: NewMessagesEvent ) => void ): this;
+	once( event: 'newMessages', listener: ( event: NewMessagesEvent ) => void ): this;
 }
 
 export class Mailer extends EventEmitter {
@@ -92,8 +100,13 @@ export class Mailer extends EventEmitter {
 		this.imap.on( 'close', () => {
 			console.log( 'close' );
 		} );
-		this.imap.on( 'exists', ( data ) => {
-			console.log( 'exists', data );
+		this.imap.on( 'exists', async ( data ) => {
+			const messages = await this.fetchNewMessages( data.path, data.prevCount, data.count );
+			const event: NewMessagesEvent = {
+				mailbox: data.path,
+				messages,
+			};
+			this.emit( 'newMessages', event );
 		} );
 		this.imap.on( 'expunge', ( data ) => {
 			console.log( 'expunge', data );
@@ -293,6 +306,36 @@ export class Mailer extends EventEmitter {
 				};
 
 				messages.push( fullMessage );
+			}
+
+			return messages;
+		} );
+	}
+
+	async fetchNewMessages( mailbox: string, previous: number, count: number ) {
+		const opts: FetchQueryObject = {
+			bodyStructure: true,
+			envelope: true,
+			flags: true,
+			headers: [
+				'Content-Type',
+			],
+			labels: true,
+			threadId: true,
+		};
+
+		return this.withLock( mailbox, async () => {
+			const messages: Message[] = [];
+			const start = previous + 1;
+			const sequence = start !== count ? `${ start }:${ count }` : `${ count }`;
+			for await ( let message of this.imap.fetch( sequence, opts, { uid: false } ) ) {
+				// rawMessages.push( message );
+				const converted = messageFromImap( message );
+				if ( ! converted ) {
+					continue;
+				}
+
+				messages.push( converted );
 			}
 
 			return messages;
