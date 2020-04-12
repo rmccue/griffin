@@ -27,6 +27,9 @@ export interface NewMessagesEvent {
 }
 
 export declare interface Mailer {
+	on( event: 'close', listener: () => void ): this;
+	once( event: 'close', listener: () => void ): this;
+	emit( event: 'close' ): boolean;
 	on( event: 'flags', listener: ( event: FlagUpdateEvent ) => void ): this;
 	once( event: 'flags', listener: ( event: FlagUpdateEvent ) => void ): this;
 	emit( event: 'flags', data: FlagUpdateEvent ): boolean;
