@@ -3,7 +3,7 @@ import findKey from 'lodash/findKey';
 import sortBy from 'lodash/sortBy';
 
 import App from './app';
-import { Mailer, FlagUpdateEvent } from './mailer';
+import { Mailer, FlagUpdateEvent, NewMessagesEvent } from './mailer';
 import { AccountOptions, Message, Thread, PartialMessage } from '../common/types';
 
 type Mailbox = {
@@ -26,6 +26,7 @@ export default class Account {
 		this.options = options;
 		this.mailer = new Mailer( options.connection );
 		this.mailer.on( 'flags', this.onFlags );
+		this.mailer.on( 'newMessages', this.onNewMessages );
 	}
 
 	async connect() {
@@ -59,6 +60,16 @@ export default class Account {
 				payload: [
 					message,
 				],
+			}
+		} );
+	}
+
+	onNewMessages = async ( event: NewMessagesEvent ) => {
+		this.app.send( {
+			event: 'dispatch',
+			data: {
+				type: 'PUSHED_MESSAGES',
+				payload: event.messages,
 			}
 		} );
 	}

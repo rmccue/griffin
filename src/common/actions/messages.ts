@@ -1,11 +1,18 @@
 import { Message, MessageDetails, PartialMessage } from '../types';
 
+export const PUSHED_MESSAGES = 'PUSHED_MESSAGES';
+
 export const QUERY_THREAD_DETAILS_REQUEST = 'QUERY_THREAD_DETAILS_REQUEST';
 export const QUERY_THREAD_DETAILS = 'QUERY_THREAD_DETAILS';
 
 export const RECEIVE_MESSAGES = 'RECEIVE_MESSAGES';
 
 export const UPDATE_MESSAGES = 'UPDATE_MESSAGES';
+
+export interface PushedMessagesAction {
+	type: typeof PUSHED_MESSAGES,
+	payload: Message[],
+}
 
 export interface ReceiveMessagesAction {
 	type: typeof RECEIVE_MESSAGES,
@@ -22,4 +29,8 @@ export interface UpdateMessagesAction {
 	payload: PartialMessage[],
 }
 
-export type MessagesAction = ReceiveMessagesDetailsAction | ReceiveMessagesAction | UpdateMessagesAction;
+export type MessagesAction =
+	PushedMessagesAction |
+	ReceiveMessagesDetailsAction |
+	ReceiveMessagesAction |
+	UpdateMessagesAction;
