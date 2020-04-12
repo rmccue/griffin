@@ -118,6 +118,11 @@ export class Mailer extends EventEmitter {
 			console.log( 'close' );
 		} );
 		this.imap.on( 'exists', async ( data ) => {
+			if ( data.prevCount > data.count ) {
+				// Expunge event, already handled.
+				return;
+			}
+
 			const messages = await this.fetchNewMessages( data.path, data.prevCount, data.count );
 			const event: NewMessagesEvent = {
 				mailbox: data.path,
