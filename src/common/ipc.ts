@@ -29,6 +29,13 @@ export interface AddAccount {
 	data: AccountOptions,
 }
 
+export interface ArchiveMessages {
+	event: 'archiveMessages',
+	data: {
+		messages: Message[],
+	}
+}
+
 export interface QueryEvent {
 	event: 'query',
 };
@@ -58,6 +65,7 @@ export interface SaveEvent {
 
 export type FrontendInitiatedEvent =
 	AddAccount |
+	ArchiveMessages |
 	QueryEvent |
 	QueryThreadDetails |
 	ReloadEvent |

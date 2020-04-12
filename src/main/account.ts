@@ -266,4 +266,9 @@ export default class Account {
 			} );
 		}
 	}
+
+	async archiveMessages( messages: Message[] ) {
+		log( 'archiveMessages', messages.map( m => m.id ) );
+		await this.mailer.deleteMessages( 'INBOX', messages );
+	}
 }

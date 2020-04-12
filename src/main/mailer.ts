@@ -412,6 +412,13 @@ export class Mailer extends EventEmitter {
 		} );
 	}
 
+	async deleteMessages( mailbox: string, messages: Message[] ) {
+		return this.withWriteLock( mailbox, async () => {
+			const ids = messages.map( message => message.uid );
+			return this.imap.messageDelete( ids, { uid: true } );
+		} );
+	}
+
 	async setRead( mailbox: string, messages: Message[] ) {
 		return this.withWriteLock( mailbox, async () => {
 			const ids = messages.map( message => message.uid );

@@ -87,6 +87,7 @@ type EventType = FrontendInitiatedEvent["event"];
 type EventTypeObj = Record<EventType, boolean>;
 const eventTypes: EventTypeObj = {
 	addAccount: true,
+	archiveMessages: true,
 	query: true,
 	queryThreadDetails: true,
     reload: true,

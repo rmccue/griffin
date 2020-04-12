@@ -221,6 +221,10 @@ export default class App {
 				this.addAccount( event.data );
 				break;
 
+			case 'archiveMessages':
+				this.accounts.selected()?.archiveMessages( event.data.messages );
+				break;
+
 			case 'save':
 				storage.set( STORAGE_KEY, event.data, err => {
 					if ( err ) {

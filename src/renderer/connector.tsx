@@ -63,6 +63,15 @@ export function addAccount( options: AccountOptions ) {
 	} );
 }
 
+export function archiveMessages( messages: Message[] ) {
+	send( {
+		event: 'archiveMessages',
+		data: {
+			messages,
+		},
+	} );
+}
+
 export function query() {
 	send( {
 		event: 'query',
