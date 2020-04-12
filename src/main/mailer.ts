@@ -114,9 +114,6 @@ export class Mailer extends EventEmitter {
 		this.imap.on( 'close', () => {
 			this.emit( 'close' );
 		} );
-		this.imap.on( 'close', () => {
-			console.log( 'close' );
-		} );
 		this.imap.on( 'exists', async ( data ) => {
 			if ( data.prevCount > data.count ) {
 				// Expunge event, already handled.
@@ -147,8 +144,6 @@ export class Mailer extends EventEmitter {
 	}
 
 	onExpunge = async ( data: { path: string, seq: number } ) => {
-		console.log( 'expunge', data );
-
 		// Find message ID, and update all other sequence numbers.
 		let foundId: string | null = null;
 		const nextMap = {};
@@ -175,11 +170,8 @@ export class Mailer extends EventEmitter {
 		this.seqMap = nextMap;
 
 		if ( ! foundId ) {
-			console.log( 'not found' );
 			return;
 		}
-
-		console.log( foundId );
 
 		this.emit( 'delete', {
 			mailbox: data.path,
