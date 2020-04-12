@@ -43,6 +43,9 @@ export class Mailer extends EventEmitter {
 	imap: ImapFlow;
 	lock: MailboxLockObject | null = null;
 
+	// Map of unique message ID => sequence
+	seqMap: { [ k: string ]: number } = {};
+
 	constructor( opts: ConnectionOptions ) {
 		super();
 
@@ -170,6 +173,9 @@ export class Mailer extends EventEmitter {
 				if ( ! msg.threadId || ! msg.internalDate ) {
 					continue;
 				}
+				if ( msg.emailId ) {
+					this.seqMap[ msg.emailId ] = msg.seq;
+				}
 
 				if ( ! threads[ msg.threadId ] ) {
 					threads[ msg.threadId ] = {
@@ -243,7 +249,10 @@ export class Mailer extends EventEmitter {
 			const messages: Message[] = [];
 			const sequence = ids.join( ',' );
 			for await ( let message of this.imap.fetch( sequence, opts, { uid: true } ) ) {
-				// rawMessages.push( message );
+				if ( message.emailId ) {
+					this.seqMap[ message.emailId ] = message.seq;
+				}
+
 				const converted = messageFromImap( message );
 				if ( ! converted ) {
 					continue;
@@ -334,7 +343,10 @@ export class Mailer extends EventEmitter {
 			const start = previous + 1;
 			const sequence = start !== count ? `${ start }:${ count }` : `${ count }`;
 			for await ( let message of this.imap.fetch( sequence, opts, { uid: false } ) ) {
-				// rawMessages.push( message );
+				if ( message.emailId ) {
+					this.seqMap[ message.emailId ] = message.seq;
+				}
+
 				const converted = messageFromImap( message );
 				if ( ! converted ) {
 					continue;
