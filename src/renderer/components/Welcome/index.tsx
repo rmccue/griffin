@@ -6,6 +6,8 @@ import ButtonList, { Button } from '../ButtonList';
 import { ConnectionOptions, AccountOptions } from '../../../common/types';
 import { addAccount } from '../../connector';
 
+import Logo from '../Logo';
+
 import './index.css';
 
 export default function Welcome() {
@@ -22,6 +24,8 @@ export default function Welcome() {
 		<main className="Welcome">
 			{ ( ! type ) ? (
 				<div className="Welcome__step">
+					<Logo />
+
 					<h1>Welcome!</h1>
 					<p>To start, add your first account.</p>
 
