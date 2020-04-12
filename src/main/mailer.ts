@@ -8,12 +8,18 @@ import {
 	ImapFlowOptions,
 	MailboxLockObject
 } from 'imapflow';
+import { findKey } from 'lodash';
 
 import log from './log';
 import { decodeMessageBody, findContentParts } from './mail/content';
 import { messageFromImap, parseFlags } from './mail/message';
 import { summarizeBodyPart } from './mail/summary';
 import { ConnectionOptions, Message, MessageDetails, MessageFlags, PartialMessage, Thread } from '../common/types';
+
+export interface DeleteMessageEvent {
+	mailbox: string;
+	id: Message["id"];
+}
 
 export interface FlagUpdateEvent {
 	mailbox: string;
@@ -30,6 +36,9 @@ export declare interface Mailer {
 	on( event: 'close', listener: () => void ): this;
 	once( event: 'close', listener: () => void ): this;
 	emit( event: 'close' ): boolean;
+	on( event: 'delete', listener: ( event: DeleteMessageEvent ) => void ): this;
+	once( event: 'delete', listener: ( event: DeleteMessageEvent ) => void ): this;
+	emit( event: 'delete', data: DeleteMessageEvent ): boolean;
 	on( event: 'flags', listener: ( event: FlagUpdateEvent ) => void ): this;
 	once( event: 'flags', listener: ( event: FlagUpdateEvent ) => void ): this;
 	emit( event: 'flags', data: FlagUpdateEvent ): boolean;
@@ -116,9 +125,7 @@ export class Mailer extends EventEmitter {
 			};
 			this.emit( 'newMessages', event );
 		} );
-		this.imap.on( 'expunge', ( data ) => {
-			console.log( 'expunge', data );
-		} );
+		this.imap.on( 'expunge', this.onExpunge );
 		this.imap.on( 'flags', ( data ) => {
 			if ( ! data.uid ) {
 				console.warn( 'oh no', data );
@@ -131,6 +138,47 @@ export class Mailer extends EventEmitter {
 				flags: parseFlags( data.flags ),
 			};
 			this.emit( 'flags', event );
+		} );
+	}
+
+	onExpunge = async ( data: { path: string, seq: number } ) => {
+		console.log( 'expunge', data );
+
+		// Find message ID, and update all other sequence numbers.
+		let foundId: string | null = null;
+		const nextMap = {};
+		for ( const id in this.seqMap ) {
+			if ( ! this.seqMap.hasOwnProperty( id ) ) {
+				continue;
+			}
+
+			const prevSeq = this.seqMap[ id ];
+			if ( prevSeq === data.seq ) {
+				// Found the ID.
+				foundId = id;
+				continue;
+			}
+
+			// Otherwise, recalculate.
+			if ( prevSeq > data.seq ) {
+				// Shift message down.
+				nextMap[ id ] = prevSeq - 1;
+			} else {
+				nextMap[ id ] = prevSeq;
+			}
+		}
+		this.seqMap = nextMap;
+
+		if ( ! foundId ) {
+			console.log( 'not found' );
+			return;
+		}
+
+		console.log( foundId );
+
+		this.emit( 'delete', {
+			mailbox: data.path,
+			id: foundId,
 		} );
 	}
 
