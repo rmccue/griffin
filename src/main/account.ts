@@ -26,6 +26,7 @@ export default class Account {
 		this.app = app;
 		this.options = options;
 		this.mailer = new Mailer( options.connection );
+		this.mailer.on( 'close', this.onClose );
 		this.mailer.on( 'flags', this.onFlags );
 		this.mailer.on( 'newMessages', this.onNewMessages );
 	}
@@ -36,6 +37,10 @@ export default class Account {
 
 	async disconnect() {
 		return await this.mailer.disconnect();
+	}
+
+	onClose = async () => {
+		log( 'Warning: disconnected from server' );
 	}
 
 	onFlags = async ( event: FlagUpdateEvent ) => {
