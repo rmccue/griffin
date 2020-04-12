@@ -23,6 +23,7 @@ const defaultState = {
 
 export default function messages( state: MessagesState = defaultState, action: MessagesAction | ThreadsAction ): MessagesState {
 	switch ( action.type ) {
+		case PUSHED_MESSAGES:
 		case QUERY_THREADS_MESSAGES:
 			return {
 				...state,
@@ -53,7 +54,6 @@ export default function messages( state: MessagesState = defaultState, action: M
 				items: action.payload,
 			};
 
-		case PUSHED_MESSAGES:
 		case UPDATE_MESSAGES: {
 			const keyedItems = keyBy( state.items, 'id' );
 			action.payload.forEach( item => {

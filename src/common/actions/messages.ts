@@ -1,4 +1,4 @@
-import { Message, MessageDetails, PartialMessage } from '../types';
+import { Message, MessageDetails, PartialMessage, Thread } from '../types';
 
 export const PUSHED_MESSAGES = 'PUSHED_MESSAGES';
 
@@ -11,7 +11,10 @@ export const UPDATE_MESSAGES = 'UPDATE_MESSAGES';
 
 export interface PushedMessagesAction {
 	type: typeof PUSHED_MESSAGES,
-	payload: Message[],
+	payload: {
+		messages: Message[],
+		changedThreads: Thread[],
+	},
 }
 
 export interface ReceiveMessagesAction {

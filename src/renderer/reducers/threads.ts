@@ -23,24 +23,8 @@ export default function threads( state: ThreadsState = defaultState, action: Thr
 		case PUSHED_MESSAGES: {
 			// Extract threads from the pushed items.
 			const keyedItems = keyBy( state.items, 'id' );
-			action.payload.forEach( message => {
-				const thread = message.thread;
-				if ( ! thread ) {
-					return;
-				}
-
-				if ( ! keyedItems[ thread ] ) {
-					keyedItems[ thread ] = {
-						id: thread,
-						messages: [],
-						date: message.date,
-					};
-				}
-
-				keyedItems[ thread ].messages.push( message.uid );
-				if ( message.date! > keyedItems[ thread ].date! ) {
-					keyedItems[ thread ].date = message.date;
-				}
+			action.payload.changedThreads.forEach( thread => {
+				keyedItems[ thread.id ] = thread;
 			} );
 			return {
 				...state,

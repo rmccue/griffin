@@ -1,5 +1,6 @@
 import debug from 'debug';
 import findKey from 'lodash/findKey';
+import keyBy from 'lodash/keyBy';
 import sortBy from 'lodash/sortBy';
 
 import App from './app';
@@ -65,11 +66,44 @@ export default class Account {
 	}
 
 	onNewMessages = async ( event: NewMessagesEvent ) => {
+		if ( ! this.mailboxes[ event.mailbox ] ) {
+			// Don't care about this mailbox.
+			return;
+		}
+
+		// Extract the threads and store them.
+		const keyedItems = keyBy( this.mailboxes[ event.mailbox ].threads, 'id' );
+		const changedThreads = {};
+		event.messages.forEach( message => {
+			const thread = message.thread;
+			if ( ! thread ) {
+				return;
+			}
+
+			if ( ! keyedItems[ thread ] ) {
+				keyedItems[ thread ] = {
+					id: thread,
+					messages: [],
+					date: message.date,
+				};
+			}
+
+			keyedItems[ thread ].messages.push( message.uid );
+			if ( message.date! > keyedItems[ thread ].date! ) {
+				keyedItems[ thread ].date = message.date;
+			}
+			changedThreads[ thread ] = keyedItems[ thread ];
+		} );
+		this.mailboxes[ event.mailbox ].threads = Object.values( keyedItems );
+
 		this.app.send( {
 			event: 'dispatch',
 			data: {
 				type: 'PUSHED_MESSAGES',
-				payload: event.messages,
+				payload: {
+					messages: event.messages,
+					changedThreads: Object.values( changedThreads ),
+				},
 			}
 		} );
 	}
