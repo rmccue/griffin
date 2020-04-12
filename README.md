@@ -27,3 +27,5 @@ yarn run start-electron-dev
 Incorporates work from [Imapflow](https://github.com/andris9/imapflow), licensed under the AGPL v3 or later. Copyright 2020 Andris Reinman.
 
 Incorporates work from [electron-react-typescript](https://github.com/Robinfr/electron-react-typescript), licensed under the MIT license. Copyright 2018-2020 R. Franken.
+
+Icon based on [Griffin](https://thenounproject.com/search/?q=griffin&i=1881913) by Icons Producer from [the Noun Project](http://thenounproject.com/), licensed under CC-BY.

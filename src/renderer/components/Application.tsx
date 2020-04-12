@@ -1,9 +1,11 @@
+import classNames from 'classnames';
 import { hot } from 'react-hot-loader/root';
 import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Header from './Header';
+import Logo from './Logo';
 import Mailbox from './Mailbox';
 import Preferences from './Preferences';
 import Router from './Router';
@@ -23,13 +25,7 @@ const Application = ( props: Props ) => {
 	const [ showSidebar, setSidebar ] = useState( false );
 	const [ showPrefs, setPrefs ] = useState( false );
 
-	if ( props.loading ) {
-		return (
-			<p>Loading…</p>
-		);
-	}
-
-	if ( Object.keys( props.accounts ).length < 1 ) {
+	if ( ! props.loading && Object.keys( props.accounts ).length < 1 ) {
 		return (
 			<Welcome
 
@@ -37,8 +33,17 @@ const Application = ( props: Props ) => {
 		);
 	}
 
+	const loaderClasses = classNames( [
+		'Application__loader',
+		props.loading && 'Application__loader--loading',
+	] );
+
 	return (
 		<Router>
+			<div className={ loaderClasses }>
+				<Logo />
+			</div>
+
 			<Preferences
 				visible={ showPrefs }
 				onClose={ () => setPrefs( false ) }
