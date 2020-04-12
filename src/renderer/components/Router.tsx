@@ -1,5 +1,6 @@
 import React, { createContext, useContext } from 'react';
 import { HashRouter } from 'react-router-dom';
+import { LastLocationProvider } from 'react-router-last-location';
 
 type HistoryState = {
 	canGoBack: boolean;
@@ -53,9 +54,11 @@ export default class Router extends React.Component<Props> {
 	render() {
 		return (
 			<HashRouter>
-				<HistoryContext.Provider value={ this.state.history }>
-					{ this.props.children }
-				</HistoryContext.Provider>
+				<LastLocationProvider>
+					<HistoryContext.Provider value={ this.state.history }>
+						{ this.props.children }
+					</HistoryContext.Provider>
+				</LastLocationProvider>
 			</HashRouter>
 		);
 	}

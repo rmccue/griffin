@@ -3,6 +3,7 @@ import sfsymbols from '@rmccue/sfsymbols';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
+import { useLastLocation } from 'react-router-last-location';
 
 import Message from './Message';
 import Toolbar, { Button as ToolbarButton } from '../Header/Toolbar';
@@ -20,6 +21,7 @@ type AllProps = Props & ReturnType<typeof mapStateToProps>;
 
 export function Thread( props: AllProps ) {
 	const history = useHistory();
+	const lastLocation = useLastLocation();
 
 	useEffect( () => {
 		// Mark messages as read.
@@ -49,8 +51,11 @@ export function Thread( props: AllProps ) {
 		archiveMessages( messages );
 
 		// Close thread and go back to previous page.
-		// todo: replace with .push instead
-		history.goBack();
+		if ( lastLocation ) {
+			history.push( lastLocation );
+		} else {
+			history.push( '/' );
+		}
 	};
 
 	return (
