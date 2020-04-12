@@ -2,10 +2,11 @@ import { Fill } from '@humanmade/react-slot-fill';
 import sfsymbols from '@rmccue/sfsymbols';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import Message from './Message';
 import Toolbar, { Button as ToolbarButton } from '../Header/Toolbar';
-import { queryThreadDetails, setRead } from '../../connector';
+import { archiveMessages, queryThreadDetails, setRead } from '../../connector';
 import { RootState } from '../../reducers';
 import { getDetailedMessages, getThreadMessages } from '../../selectors/threads';
 
@@ -18,6 +19,8 @@ interface Props {
 type AllProps = Props & ReturnType<typeof mapStateToProps>;
 
 export function Thread( props: AllProps ) {
+	const history = useHistory();
+
 	useEffect( () => {
 		// Mark messages as read.
 		if ( props.messages ) {
@@ -42,6 +45,14 @@ export function Thread( props: AllProps ) {
 	const subject = messages[0].subject;
 	const usefulMessages = details.length ? details : messages;
 
+	const onArchive = () => {
+		archiveMessages( messages );
+
+		// Close thread and go back to previous page.
+		// todo: replace with .push instead
+		history.goBack();
+	};
+
 	return (
 		<article className="Thread">
 			<h1>{ subject }</h1>
@@ -51,7 +62,7 @@ export function Thread( props: AllProps ) {
 					<ToolbarButton
 						icon={ sfsymbols['archivebox.fill'] }
 						title="Archive message"
-						onClick={ () => console.log( 'archive' ) }
+						onClick={ onArchive }
 					/>
 					<ToolbarButton
 						icon={ sfsymbols['trash.fill'] }
