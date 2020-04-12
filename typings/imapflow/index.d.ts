@@ -806,8 +806,8 @@ declare module "imapflow" {
      * @property {Date|string} [sentSince] Matches messages sent after date
      * @property {String} [keyword] Matches messages that have the custom flag set
      * @property {String} [unKeyword] Matches messages that do not have the custom flag set
-     * @property {Object.<string, Boolean|String>} [header] Mathces messages with header key set (if value is `true`) or messages where header partially matches (if value is a string)
-     * @property {SearchObject[]} [or] An array of 2 or more {@link SearchObject} objects. At least on of these must match
+     * @property {Object.<string, Boolean|String>} [header] Matches messages with header key set (if value is `true`) or messages where header partially matches (if value is a string)
+     * @property {SearchObject[]} [or] An array of 2 or more {@link SearchObject} objects. At least one of these must match
      */
     type SearchObject = {
         seq?: SequenceString;
