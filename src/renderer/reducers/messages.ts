@@ -3,6 +3,7 @@ import uniqBy from 'lodash/uniqBy';
 
 import { ThreadsAction, QUERY_THREADS_MESSAGES } from '../../common/actions/threads';
 import {
+	DELETED_MESSAGE,
 	MessagesAction,
 	PUSHED_MESSAGES,
 	QUERY_THREAD_DETAILS,
@@ -67,6 +68,10 @@ export default function messages( state: MessagesState = defaultState, action: M
 				items: Object.values( keyedItems ),
 			};
 		}
+
+		case DELETED_MESSAGE:
+			// Do nothing.
+			return state;
 
 		default:
 			// Force exhaustive type checks.

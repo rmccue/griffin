@@ -4,7 +4,12 @@ import keyBy from 'lodash/keyBy';
 import sortBy from 'lodash/sortBy';
 
 import App from './app';
-import { Mailer, FlagUpdateEvent, NewMessagesEvent } from './mailer';
+import {
+	DeleteMessageEvent,
+	FlagUpdateEvent,
+	Mailer,
+	NewMessagesEvent
+} from './mailer';
 import { AccountOptions, Message, Thread, PartialMessage } from '../common/types';
 
 type Mailbox = {
@@ -27,6 +32,7 @@ export default class Account {
 		this.options = options;
 		this.mailer = new Mailer( options.connection );
 		this.mailer.on( 'close', this.onClose );
+		this.mailer.on( 'delete', this.onDelete );
 		this.mailer.on( 'flags', this.onFlags );
 		this.mailer.on( 'newMessages', this.onNewMessages );
 	}
@@ -41,6 +47,16 @@ export default class Account {
 
 	onClose = async () => {
 		log( 'Warning: disconnected from server' );
+	}
+
+	onDelete = async ( event: DeleteMessageEvent ) => {
+		this.app.send( {
+			event: 'dispatch',
+			data: {
+				type: 'DELETED_MESSAGE',
+				payload: event.id,
+			},
+		} );
 	}
 
 	onFlags = async ( event: FlagUpdateEvent ) => {
