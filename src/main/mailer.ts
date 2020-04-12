@@ -8,7 +8,6 @@ import {
 	ImapFlowOptions,
 	MailboxLockObject
 } from 'imapflow';
-import { findKey } from 'lodash';
 
 import log from './log';
 import { decodeMessageBody, findContentParts } from './mail/content';
