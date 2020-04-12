@@ -50,11 +50,41 @@ export default class Account {
 	}
 
 	onDelete = async ( event: DeleteMessageEvent ) => {
+		// Find the UID for the message.
+		const uid = this.idMap[ event.id ];
+
+		// Find any changed threads.
+		const keyedItems = keyBy( this.mailboxes[ event.mailbox ].threads, 'id' );
+		const changedThreads: Thread[] = [];
+		const removedThreads: string[] = [];
+		for ( const thread of this.mailboxes[ event.mailbox ].threads ) {
+			const nextMessages = thread.messages.filter( m => m !== uid );
+			if ( nextMessages.length === thread.messages.length ) {
+				continue;
+			}
+
+			if ( nextMessages.length === 0 ) {
+				// Remove the thread.
+				delete keyedItems[ thread.id ];
+				removedThreads.push( thread.id );
+				continue;
+			}
+
+			// Update the thread.
+			keyedItems[ thread.id ].messages = nextMessages;
+			changedThreads.push( keyedItems[ thread.id ] );
+		}
+		this.mailboxes[ event.mailbox ].threads = Object.values( keyedItems );
+
 		this.app.send( {
 			event: 'dispatch',
 			data: {
 				type: 'DELETED_MESSAGE',
-				payload: event.id,
+				payload: {
+					id: event.id,
+					changedThreads,
+					removedThreads,
+				},
 			},
 		} );
 	}

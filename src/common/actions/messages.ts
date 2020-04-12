@@ -13,7 +13,11 @@ export const UPDATE_MESSAGES = 'UPDATE_MESSAGES';
 
 export interface DeletedMessageAction {
 	type: typeof DELETED_MESSAGE,
-	payload: Message["id"],
+	payload: {
+		id: Message["id"],
+		changedThreads: Thread[],
+		removedThreads: string[],
+	},
 }
 
 export interface PushedMessagesAction {
