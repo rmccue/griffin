@@ -25,7 +25,7 @@ const Author = ( { user }: AuthorProps ) => (
 const Body = ( { item }: { item: MessageDetails } ) => {
 	if ( ! item.body.html ) {
 		return (
-			<div style={{ whiteSpace: 'pre' }}>
+			<div className="Thread-Message__body-text">
 				{ item.body.text }
 			</div>
 		);

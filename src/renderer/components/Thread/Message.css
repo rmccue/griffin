@@ -25,3 +25,8 @@
 .Thread-Message__date {
 	font-size: 0.9em;
 }
+
+.Thread-Message__body-text {
+	white-space: pre;
+	user-select: text;
+}
