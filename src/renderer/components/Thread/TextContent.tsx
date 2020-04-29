@@ -1,6 +1,8 @@
 import linkifyUrls from 'linkify-urls';
 import React, { useEffect, useRef } from 'react';
 
+import './TextContent.css';
+
 interface Props {
 	content: string;
 }
@@ -24,7 +26,7 @@ export default function TextContent( props: Props ) {
 
 	return (
 		<div
-			className="Thread-Message__body-text"
+			className="Thread-TextContent"
 			ref={ ref }
 		/>
 	);
