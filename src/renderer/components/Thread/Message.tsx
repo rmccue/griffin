@@ -1,6 +1,7 @@
 import React from 'react';
 
 import HtmlContent from './HtmlContent';
+import TextContent from './TextContent';
 import MessageTime from '../MessageTime';
 import { Address, Message as MessageType, MessageDetails } from '../../../common/types';
 
@@ -25,9 +26,9 @@ const Author = ( { user }: AuthorProps ) => (
 const Body = ( { item }: { item: MessageDetails } ) => {
 	if ( ! item.body.html ) {
 		return (
-			<div className="Thread-Message__body-text">
-				{ item.body.text }
-			</div>
+			<TextContent
+				content={ item.body.text || '' }
+			/>
 		);
 	}
 
