@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Header from './Header';
 import Logo from './Logo';
 import Mailbox from './Mailbox';
+import PluginRoot from './PluginRoot';
 import Preferences from './Preferences';
 import Router from './Router';
 import Sidebar from './Sidebar';
@@ -85,6 +86,8 @@ const Application = ( props: Props ) => {
 					Footer?
 				</footer> */}
 			</div>
+
+			<PluginRoot />
 		</Router>
 	);
 }
