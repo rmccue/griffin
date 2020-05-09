@@ -1,3 +1,4 @@
+import { Slot } from '@humanmade/react-slot-fill';
 import classnames from 'classnames';
 import uniq from 'lodash/uniq';
 import React from 'react';
@@ -62,6 +63,7 @@ export function Thread( props: AllProps ) {
 			className={ className }
 			onClick={ onOpen }
 		>
+			<Slot name="ThreadList-Thread.start" />
 			<Checkbox
 				checked={ selected }
 				className="ThreadList-Thread__select"
@@ -75,6 +77,7 @@ export function Thread( props: AllProps ) {
 						{ messages.length }
 					</span>
 				) }
+				<Slot name="ThreadList-Thread.participants" />
 			</span>
 			<span className="ThreadList-Thread__summary">
 				<span className="ThreadList-Thread__subject">
@@ -85,12 +88,14 @@ export function Thread( props: AllProps ) {
 						{ messages[0].summary }
 					</span>
 				) }
+				<Slot name="ThreadList-Thread.summary" />
 			</span>
 			<MessageTime
 				className="ThreadList-Thread__datetime"
 				short
 				value={ updated! }
 			/>
+			<Slot name="ThreadList-Thread.end" />
 		</li>
 	);
 }

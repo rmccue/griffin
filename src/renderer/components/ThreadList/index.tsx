@@ -1,3 +1,4 @@
+import { Slot } from '@humanmade/react-slot-fill';
 import reverse from 'lodash/reverse';
 import sortBy from 'lodash/sortBy';
 import React, { useState } from 'react';
@@ -34,6 +35,7 @@ export function ThreadList( props: Props & ReturnType<typeof mapStateToProps> ) 
 
 	return (
 		<ol className="ThreadList">
+			<Slot name="ThreadList.start" />
 			{ sortedItems.map( ( item, idx ) => (
 				<Thread
 					key={ item.id }
@@ -46,6 +48,7 @@ export function ThreadList( props: Props & ReturnType<typeof mapStateToProps> ) 
 					onSelect={ () => setSelected( { ...selected, [ idx ]: true } ) }
 				/>
 			) ) }
+			<Slot name="ThreadList.end" />
 		</ol>
 	)
 }

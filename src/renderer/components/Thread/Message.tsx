@@ -1,3 +1,4 @@
+import { Slot } from '@humanmade/react-slot-fill';
 import React from 'react';
 
 import HtmlContent from './HtmlContent';
@@ -53,6 +54,10 @@ export default function Message( props: Props ) {
 							user={ user }
 						/>
 					) ) }
+					<Slot
+						fillProps={ { item } }
+						name="Thread-Message.header.primary"
+					/>
 				</div>
 				<div>
 					{ item.date && (
@@ -62,9 +67,17 @@ export default function Message( props: Props ) {
 							value={ item.date }
 						/>
 					) }
+					<Slot
+						fillProps={ { item } }
+						name="Thread-Message.header.secondary"
+					/>
 				</div>
 			</header>
 
+			<Slot
+				fillProps={ { item } }
+				name="Thread-Message.content.start"
+			/>
 			{ ( item as MessageDetails ).body ? (
 				<Body
 					item={ item as MessageDetails }
@@ -72,6 +85,10 @@ export default function Message( props: Props ) {
 			) : (
 				<p>Loading…</p>
 			) }
+			<Slot
+				fillProps={ { item } }
+				name="Thread-Message.content.end"
+			/>
 		</li>
 	);
 }

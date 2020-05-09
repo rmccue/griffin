@@ -1,4 +1,4 @@
-import { Fill } from '@humanmade/react-slot-fill';
+import { Fill, Slot } from '@humanmade/react-slot-fill';
 import sfsymbols from '@rmccue/sfsymbols';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
@@ -58,6 +58,9 @@ export function Thread( props: AllProps ) {
 		}
 	};
 
+	const fillProps = {
+		id: props.id,
+	};
 	return (
 		<article className="Thread">
 			<h1>{ subject }</h1>
@@ -68,6 +71,10 @@ export function Thread( props: AllProps ) {
 						icon={ sfsymbols['archivebox.fill'] }
 						title="Archive message"
 						onClick={ onArchive }
+					/>
+					<Slot
+						fillProps={ fillProps }
+						name="Thread.toolbar"
 					/>
 					{/*
 					<ToolbarButton
@@ -85,12 +92,20 @@ export function Thread( props: AllProps ) {
 			</Fill>
 
 			<ol className="Thread__content">
+				<Slot
+					fillProps={ fillProps }
+					name="Thread.content.start"
+				/>
 				{ usefulMessages.map( item => (
 					<Message
 						key={ item.id }
 						item={ item }
 					/>
 				) ) }
+				<Slot
+					fillProps={ fillProps }
+					name="Thread.content.end"
+				/>
 			</ol>
 		</article>
 	);
