@@ -2,9 +2,10 @@
   "name": "griffin",
   "productName": "Griffin",
   "version": "0.0.7",
-  "description": "",
+  "description": "An email client.",
   "main": "./dist/main.js",
   "scripts": {
+    "build-icns": "iconutil --convert icns --output Griffin.icns icon.iconset/",
     "build-main": "cross-env NODE_ENV=production webpack --config webpack.main.prod.config.js",
     "build-main-dev": "webpack --config webpack.main.config.js",
     "build-renderer": "cross-env NODE_ENV=production webpack --config webpack.renderer.prod.config.js",
@@ -17,7 +18,7 @@
     "test": "jest '(\\/test\\/(?!e2e/)).*'",
     "pretest:e2e": "npm run build",
     "test:e2e": "jest '(\\/test\\/e2e/).*'",
-    "pack": "npm run build && electron-builder --dir",
+    "pack": "npm run build && CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --dir",
     "dist": "npm run build && electron-builder",
     "postinstall": "electron-builder install-app-deps"
   },
@@ -53,10 +54,13 @@
     }
   },
   "build": {
-    "productName": "ProductName",
-    "appId": "org.your.productname",
+    "productName": "Griffin",
+    "appId": "io.rmccue.griffin",
     "mac": {
-      "category": "your.app.category.type"
+      "category": "public.app-category.productivity",
+      "icon": "Griffin.icns",
+      "type": "development",
+      "hardenedRuntime": false
     },
     "directories": {
       "output": "release"
@@ -78,8 +82,8 @@
     "url": "git+ssh://git@github.com:Robinfr/electron-react-typescript.git"
   },
   "author": {
-    "name": "Your name",
-    "email": "Your email"
+    "name": "Ryan McCue",
+    "email": "me+griffin@ryanmccue.info"
   },
   "license": "SEE LICENSE",
   "bugs": {
