@@ -28,6 +28,10 @@ export interface ContentPart {
 	type: 'text/plain' | 'text/html';
 }
 
+export type Headers = {
+	[ k: string ]: string[];
+}
+
 export interface Message {
 	id: MessageId;
 	uid: Uid;
@@ -39,6 +43,7 @@ export interface Message {
 	to: Address[];
 	sender: Address[];
 	replyTo: Address[];
+	headers?: Headers;
 	flags: MessageFlags;
 	contentParts: ContentPart[];
 	summary?: string;

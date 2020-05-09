@@ -1,4 +1,5 @@
 import { FetchMessageObject } from 'imapflow';
+import libmime from 'libmime';
 
 import { findContentParts } from './content';
 import { Message, MessageFlags } from '../../common/types';
@@ -33,6 +34,7 @@ export function messageFromImap( raw: FetchMessageObject, summary?: string ) : M
 		flags: parseFlags( raw.flags ),
 		contentParts: contentParts || [],
 		summary: summary,
+		headers: raw.headers ? libmime.decodeHeaders( raw.headers.toString().trimRight() ) : undefined,
 	};
 
 	return message;

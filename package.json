@@ -168,6 +168,7 @@
     "iconv-lite": "^0.5.1",
     "iframe-resizer": "^4.2.10",
     "imapflow": "^1.0.35",
+    "libmime": "4.2.x",
     "linkify-urls": "^3.1.0",
     "lodash": "^4.17.15",
     "pify": "^5.0.0",
