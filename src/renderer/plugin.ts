@@ -6,19 +6,13 @@ import React from 'react';
 
 export interface Plugin {
 	id: string;
-	name: string;
-	component: React.FC;
-}
-
-export interface PluginMeta {
-	id: string;
 	data: any;
 	type: 'user' | 'bundled',
-	load: () => Promise<Plugin>,
+	load: () => Promise<React.ComponentType>,
 }
 
-export type PluginMetaMap = {
-	[ k: string ]: PluginMeta;
+export type PluginMap = {
+	[ k: string ]: Plugin;
 }
 
 const bundled = [
@@ -32,8 +26,8 @@ export const pluginRootDir = path.join( remote.app.getPath( 'userData' ), 'plugi
 type FsParams = Parameters<typeof fs.readdir>;
 const readdir: ( path: FsParams[0], options?: FsParams[1] ) => Promise<string[]> = pify( fs.readdir );
 
-async function getAvailableForDir( dir: string ): Promise<PluginMetaMap> {
-	const available: PluginMetaMap = {};
+async function getAvailableForDir( dir: string ): Promise<PluginMap> {
+	const available: PluginMap = {};
 	const entries = await readdir( dir );
 	for ( const entry of entries ) {
 		const full = path.join( dir, entry );
@@ -66,8 +60,8 @@ async function getAvailableForDir( dir: string ): Promise<PluginMetaMap> {
 	return available;
 }
 
-async function getAvailableBundled(): Promise<PluginMetaMap> {
-	const available: PluginMetaMap = {};
+async function getAvailableBundled(): Promise<PluginMap> {
+	const available: PluginMap = {};
 	for ( const plugin of bundled ) {
 		const packageJson = ( await import( `./plugins/${ plugin }/package.json` ) ).default;
 		available[ plugin ] = {
@@ -83,9 +77,9 @@ async function getAvailableBundled(): Promise<PluginMetaMap> {
 	return available;
 }
 
-export async function getAvailable(): Promise<PluginMetaMap> {
+export async function getAvailable(): Promise<PluginMap> {
 	console.log( 'gettingAvail' );
-	let user: PluginMetaMap = {};
+	let user: PluginMap = {};
 	try {
 		user = await getAvailableForDir( pluginRootDir );
 	} catch ( err ) {

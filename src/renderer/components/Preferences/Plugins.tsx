@@ -4,12 +4,12 @@ import React, { useEffect, useState } from 'react';
 import Button from '../Form/Button';
 import Toggle from '../Form/Toggle';
 import Icon from '../Icon';
-import { getAvailable, pluginRootDir, PluginMeta, PluginMetaMap } from '../../plugin';
+import { getAvailable, pluginRootDir, Plugin as PluginData, PluginMap } from '../../plugin';
 
 import './Plugins.css';
 
 type PluginProps = {
-	data: PluginMeta;
+	data: PluginData;
 	enabled: boolean;
 }
 
@@ -49,7 +49,7 @@ const enabled = [
 ];
 
 export default function Plugins() {
-	const [ available, setAvailable ] = useState<PluginMetaMap | null>( null );
+	const [ available, setAvailable ] = useState<PluginMap | null>( null );
 
 	const onLoadAvailable = () => getAvailable().then( available => setAvailable( available ) );
 	useEffect( () => {

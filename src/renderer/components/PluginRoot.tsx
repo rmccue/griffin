@@ -7,14 +7,16 @@ interface Props {
 }
 
 interface State {
-	plugins: Plugin[];
+	plugins: {
+		[ k: string ]: React.ComponentType,
+	};
 }
 
 let didMount = false;
 
 export default class PluginRoot extends React.Component<Props> {
 	state: State = {
-		plugins: [],
+		plugins: {},
 	};
 
 	componentWillMount() {
@@ -32,13 +34,14 @@ export default class PluginRoot extends React.Component<Props> {
 	async loadPlugins() {
 		const available = await getAvailable();
 
-		const plugins = await Promise.all( this.props.enabled.map( async plugin => {
-			if ( ! available[ plugin ] ) {
+		const plugins = {};
+		for await ( const id of this.props.enabled ) {
+			if ( ! available[ id ] ) {
 				return null;
 			}
 
-			return await available[ plugin ].load();
-		} ) );
+			plugins[ id ] = await available[ id ].load();
+		}
 
 		this.setState( { plugins } );
 	}
@@ -48,11 +51,14 @@ export default class PluginRoot extends React.Component<Props> {
 
 		return (
 			<React.Fragment>
-				{ plugins.map( plugin => (
-					<plugin.component
-						key={ plugin.id }
-					/>
-				) ) }
+				{ Object.keys( plugins ).map( id => {
+					const Component = plugins[ id ];
+					return (
+						<Component
+							key={ id }
+						/>
+					);
+				} ) }
 			</React.Fragment>
 		);
 	}
