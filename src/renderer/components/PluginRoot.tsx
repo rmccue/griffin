@@ -43,6 +43,7 @@ export default class PluginRoot extends React.Component<Props> {
 		const plugins = {};
 		for await ( const id of this.props.enabled ) {
 			if ( ! available[ id ] ) {
+				console.warn( `Cannot find ${ id }` );
 				return null;
 			}
 
