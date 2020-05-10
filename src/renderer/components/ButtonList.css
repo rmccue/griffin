@@ -14,10 +14,11 @@
 	text-align: left;
 	width: 100%;
 	display: grid;
-	grid-template-columns: 2.2em auto;
+	grid-template-columns: 2em auto;
+	column-gap: 0.5em;
 	align-items: center;
 
-	padding: 0.5em 1em;
+	padding: 0.5em 0.8em;
 }
 
 .ButtonList__button:hover {
@@ -34,7 +35,7 @@
 }
 
 .ButtonList__button--with-arrow {
-	grid-template-columns: 2.2em auto 2.2em;
+	grid-template-columns: 2em auto 2.2em;
 }
 
 .ButtonList__button--selected span {
@@ -42,5 +43,6 @@
 }
 
 .ButtonList__button .Icon {
-	font-size: 1.5em;
+	font-size: 1.2em;
+	text-align: center;
 }
