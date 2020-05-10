@@ -41,6 +41,16 @@
 	--color-button-primary-active-background: hsl( 201, 73%, 38% );
 	--color-button-primary-hover-background: hsl( 201, 73%, 45% );
 
+	/* Toggle */
+	--color-toggle-background: var( --color-button-background );
+	--color-toggle-border: rgba( 0, 0, 0, 0.1 );
+	--color-toggle-hover: var( --color-button-hover-background );
+	--color-toggle-active: var( --color-button-active-background );
+	--color-toggle-checked-background: hsl( 220, 100%, 45% );
+	--color-toggle-checked-border: hsl( 220, 95%, 40% );
+	--color-toggle-checked-hover: hsl( 220, 100%, 35% );
+	--color-toggle-checked-active: hsl( 220, 100%, 30% );
+
 	/*
 	  DERIVED VARIABLES
 

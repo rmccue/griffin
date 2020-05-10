@@ -1,0 +1,52 @@
+.Form-Toggle {
+	-webkit-appearance: none;
+	padding: 0;
+	margin: 0;
+	outline: 0;
+	border: 1px solid var( --color-toggle-border );
+	height: 20px;
+	width: 36px;
+	border-radius: 10px;
+	background: var(--color-button-background);
+	box-sizing: border-box;
+}
+
+.Form-Toggle:hover {
+	background: var( --color-toggle-hover );
+	border-color: var( --color-toggle-border );
+}
+
+.Form-Toggle:active {
+	background: var( --color-toggle-active );
+	border-color: var( --color-toggle-border );
+}
+
+.Form-Toggle:checked {
+	background: var( --color-toggle-checked-background );
+	border-color: var( --color-toggle-checked-border );
+}
+
+.Form-Toggle:checked:hover {
+	background: var( --color-toggle-checked-hover );
+	border-color: var( --color-toggle-checked-active );
+}
+
+.Form-Toggle:checked:active {
+	background: var( --color-toggle-checked-active );
+	border-color: var( --color-toggle-checked-active );
+}
+
+.Form-Toggle::before {
+	display: block;
+	content: "";
+	background: #fff;
+	height: 14px;
+	width: 14px;
+	margin: 2px;
+	border-radius: 50%;
+	transition: transform 100ms;
+}
+
+.Form-Toggle:checked::before {
+	transform: translateX( 16px );
+}
