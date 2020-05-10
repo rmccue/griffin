@@ -13,6 +13,8 @@ interface State {
 	plugins: Plugin[];
 }
 
+let didMount = false;
+
 export default class PluginRoot extends React.Component {
 	state: State = {
 		plugins: [],
@@ -20,6 +22,14 @@ export default class PluginRoot extends React.Component {
 
 	componentWillMount() {
 		this.loadPlugins();
+	}
+
+	componentDidUpdate() {
+		// Detect HMR.
+		if ( ! didMount ) {
+			this.loadPlugins();
+			didMount = true;
+		}
 	}
 
 	async loadPlugins() {
