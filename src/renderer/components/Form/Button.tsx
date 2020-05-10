@@ -10,7 +10,7 @@ interface CommonProps {
 }
 
 interface ButtonProps {
-	submit: false | undefined;
+	submit?: false;
 	onClick( e: React.MouseEvent<HTMLButtonElement> ): void;
 }
 
