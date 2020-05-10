@@ -1,6 +1,12 @@
 import React from 'react';
 
+import { PluginErrorBoundary } from './PluginError';
 import { getAvailable, Plugin } from '../plugin';
+
+type RenderProps = {
+	component: React.ComponentType;
+}
+const PluginRender = ( props: RenderProps ) => ( <props.component /> );
 
 interface Props {
 	enabled: string[];
@@ -51,14 +57,14 @@ export default class PluginRoot extends React.Component<Props> {
 
 		return (
 			<React.Fragment>
-				{ Object.keys( plugins ).map( id => {
-					const Component = plugins[ id ];
-					return (
-						<Component
+				{ Object.keys( plugins ).map( id => (
+					<PluginErrorBoundary id={ id }>
+						<PluginRender
 							key={ id }
+							component={ plugins[ id ] }
 						/>
-					);
-				} ) }
+					</PluginErrorBoundary>
+				) ) }
 			</React.Fragment>
 		);
 	}

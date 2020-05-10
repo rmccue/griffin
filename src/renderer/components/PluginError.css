@@ -1,0 +1,17 @@
+.PluginError {
+	grid-column: 1 / -1;
+	background: var( --color-header-background );
+	border-top: var( --color-header-border-bottom );
+	color: var( --color-header-text );
+	padding: 0.5em;
+	display: flex;
+	align-items: baseline;
+}
+
+.PluginError p {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+.PluginError > * {
+	margin-right: 1em;
+}
