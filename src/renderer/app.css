@@ -98,3 +98,11 @@ html, body, #main {
 *, *::before, *::after {
 	box-sizing: border-box;
 }
+
+code {
+	font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+	font-size: 0.8em;
+	background: var( --color-button-background );
+	padding: 0.2em 0.5em;
+	border-radius: 4px;
+}
