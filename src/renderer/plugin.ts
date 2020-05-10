@@ -38,16 +38,17 @@ async function getAvailableForDir( dir: string ): Promise<PluginMap> {
 
 		// Check if a root exists.
 		// todo: use package.json?
-		const rootPath = path.join( dir, entry, 'package.json' );
+		const packageJsonPath = path.join( dir, entry, 'package.json' );
 		try {
-			fs.statSync( rootPath );
+			fs.statSync( packageJsonPath );
 		} catch ( err ) {
 			continue;
 		}
 
 		// Clear Node's cache!
-		delete __non_webpack_require__.cache[ rootPath ];
-		const packageJson = __non_webpack_require__( rootPath );
+		delete __non_webpack_require__.cache[ packageJsonPath ];
+		const packageJson = __non_webpack_require__( packageJsonPath );
+		const rootPath = path.join( dir, entry, packageJson.main || 'index.js' );
 
 		available[ entry ] = {
 			type: 'user',
