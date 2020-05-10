@@ -45,7 +45,7 @@ export function Fill( props: FillProps ) {
 
 interface SlotProps {
 	name: string;
-	fillProps: {
+	fillProps?: {
 		[ k: string ]: any;
 	};
 }
