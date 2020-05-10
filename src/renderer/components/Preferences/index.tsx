@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import React, { useState } from 'react';
 
 import General from './General';
+import Plugins from './Plugins';
 import ButtonList, { Button as ListButton } from '../ButtonList';
 import Icon from '../Icon';
 import HeaderToolbar, { Button as HeaderToolbarButton } from '../Header/Toolbar';
@@ -56,7 +57,13 @@ const SECTIONS = [
 		icon: sfsymbols['paintbrush'],
 		title: 'Appearance',
 		component: Placeholder,
-	}
+	},
+	{
+		id: 'plugins',
+		icon: sfsymbols['hammer'],
+		title: 'Plugins',
+		component: Plugins,
+	},
 ];
 
 export default function Preferences( props: Props ) {

@@ -1,0 +1,49 @@
+.Preferences-Plugins {
+	max-width: 40rem;
+}
+
+.Preferences-Plugins__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.Preferences-Plugins__reload {
+	font-size: 1.5em;
+}
+
+.Preferences-Plugins__list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.Preferences-Plugins__plugin {
+	margin: 1rem 0;
+	padding: 1rem;
+	/* background: var( --color-background-chrome ); */
+	background: var( --color-button-background );
+	/* color: var( --color-primary ); */
+	border-radius: 4px;
+}
+
+.Preferences-Plugins__plugin-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
+.Preferences-Plugins__plugins-name {
+	display: flex;
+	align-items: baseline;
+}
+
+.Preferences-Plugins__plugins-name h2 {
+	margin: 0;
+	font-size: 1.2em;
+	margin-right: 0.5em;
+}
+
+.Preferences-Plugins__plugins-name abbr {
+	text-decoration: none;
+}
