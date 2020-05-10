@@ -1,4 +1,3 @@
-import { Slot } from '@humanmade/react-slot-fill';
 import classnames from 'classnames';
 import uniq from 'lodash/uniq';
 import React from 'react';
@@ -9,6 +8,7 @@ import Checkbox from '../Form/Checkbox';
 import MessageTime from '../MessageTime';
 import { RootState } from '../../reducers';
 import { getThreadMessages } from '../../selectors/threads';
+import { Slot } from '../../slot-fill';
 import { lastUpdate } from '../../../common/message';
 import { Address, Thread as ThreadType } from '../../../common/types';
 

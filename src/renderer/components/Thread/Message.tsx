@@ -1,9 +1,9 @@
-import { Slot } from '@humanmade/react-slot-fill';
 import React from 'react';
 
 import HtmlContent from './HtmlContent';
 import TextContent from './TextContent';
 import MessageTime from '../MessageTime';
+import { Slot } from '../../slot-fill';
 import { Address, Message as MessageType, MessageDetails } from '../../../common/types';
 
 import './Message.css';

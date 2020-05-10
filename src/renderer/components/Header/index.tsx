@@ -1,4 +1,3 @@
-import { Slot } from '@humanmade/react-slot-fill';
 import sfsymbols from '@rmccue/sfsymbols';
 import classNames from 'classnames';
 import React from 'react';
@@ -7,6 +6,7 @@ import { useHistory } from 'react-router';
 import Toolbar, { Button, Separator } from './Toolbar';
 import { useHistoryState } from '../Router';
 import { reload, save } from '../../connector';
+import { Slot } from '../../slot-fill';
 
 import './index.css';
 

@@ -1,4 +1,3 @@
-import { Slot } from '@humanmade/react-slot-fill';
 import reverse from 'lodash/reverse';
 import sortBy from 'lodash/sortBy';
 import React, { useState } from 'react';
@@ -7,6 +6,7 @@ import { useHistory } from 'react-router';
 
 import Thread from './Thread';
 import { getThreadUpdateTimes } from '../../selectors/threads';
+import { Slot } from '../../slot-fill';
 import { Thread as ThreadType } from '../../../common/types';
 
 import './index.css';

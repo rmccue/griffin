@@ -1,4 +1,3 @@
-import { Fill, Slot } from '@humanmade/react-slot-fill';
 import sfsymbols from '@rmccue/sfsymbols';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
@@ -10,6 +9,7 @@ import Toolbar, { Button as ToolbarButton } from '../Header/Toolbar';
 import { archiveMessages, queryThreadDetails, setRead } from '../../connector';
 import { RootState } from '../../reducers';
 import { getDetailedMessages, getThreadMessages } from '../../selectors/threads';
+import { Fill, Slot } from '../../slot-fill';
 
 import './index.css';
 

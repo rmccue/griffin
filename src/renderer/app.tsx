@@ -1,4 +1,3 @@
-import { Provider as SlotFillProvider } from '@humanmade/react-slot-fill';
 import { ipcRenderer } from 'electron';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -9,6 +8,7 @@ import { AppContainer } from 'react-hot-loader';
 import { BackendInitiatedEvent } from '../common/ipc';
 import Application from './components/Application';
 import { receive } from './connector';
+import { Provider as SlotFillProvider } from './slot-fill';
 import store from './store';
 
 import './app.css';

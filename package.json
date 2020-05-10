@@ -179,6 +179,7 @@
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.1.2",
     "react-router-last-location": "^2.0.1",
+    "react-slot-fill": "^2.0.1",
     "redux": "^4.0.1",
     "redux-persist": "^6.0.0",
     "reselect": "^4.0.0",

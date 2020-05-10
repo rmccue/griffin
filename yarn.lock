@@ -10061,6 +10061,11 @@ react-router@5.1.2:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
+react-slot-fill@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-slot-fill/-/react-slot-fill-2.0.1.tgz#3f55b5f3218274666dc38b8add5b60e0bd04468d"
+  integrity sha512-jZzE+vbYAblPXSPFlir+aL5ljxwB0dJ62O2pR74OS/TUVDTW95msrdszJKLNp4lxzNcoHnCRIzLT6crBgTolGg==
+
 react-test-renderer@^16.8.6:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.13.1.tgz#de25ea358d9012606de51e012d9742e7f0deabc1"
