@@ -1,13 +1,10 @@
 import React from 'react';
 
-interface Plugin {
-	id: string;
-	name: string;
-	component: React.FC;
-}
+import { getAvailable, Plugin } from '../plugin';
 
-const enabledPlugins = [
-];
+interface Props {
+	enabled: string[];
+}
 
 interface State {
 	plugins: Plugin[];
@@ -15,7 +12,7 @@ interface State {
 
 let didMount = false;
 
-export default class PluginRoot extends React.Component {
+export default class PluginRoot extends React.Component<Props> {
 	state: State = {
 		plugins: [],
 	};
@@ -33,9 +30,14 @@ export default class PluginRoot extends React.Component {
 	}
 
 	async loadPlugins() {
-		const plugins = await Promise.all( enabledPlugins.map( async plugin => {
-			const mod = await import( `../plugins/${ plugin }` );
-			return mod.default;
+		const available = await getAvailable();
+
+		const plugins = await Promise.all( this.props.enabled.map( async plugin => {
+			if ( ! available[ plugin ] ) {
+				return null;
+			}
+
+			return await available[ plugin ].load();
 		} ) );
 
 		this.setState( { plugins } );

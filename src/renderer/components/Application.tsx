@@ -87,7 +87,9 @@ const Application = ( props: Props ) => {
 				</footer> */}
 			</div>
 
-			<PluginRoot />
+			<PluginRoot
+				enabled={ [] }
+			/>
 		</Router>
 	);
 }
