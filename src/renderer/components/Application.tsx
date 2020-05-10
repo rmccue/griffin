@@ -14,6 +14,7 @@ import Sidebar from './Sidebar';
 import Thread from './Thread';
 import Welcome from './Welcome';
 import { RootState } from '../reducers';
+import { Slot } from '../slot-fill';
 
 import './Application.css';
 
@@ -85,6 +86,8 @@ const Application = ( props: Props ) => {
 				{/* <footer>
 					Footer?
 				</footer> */}
+
+				<Slot name="Application.footer" />
 			</div>
 
 			<PluginRoot
