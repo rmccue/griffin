@@ -15,8 +15,8 @@ export default class HtmlContent extends React.Component<Props> {
 	ref: WebviewTag | null = null;
 	resizer?: any;
 
-	state = {
-		height: 200,
+	state: { height: number | null } = {
+		height: null,
 	}
 
 	componentWillUnmount() {
@@ -47,11 +47,22 @@ export default class HtmlContent extends React.Component<Props> {
 	render() {
 		const { html } = this.props;
 		const data = `data:text/html;charset=utf-8;base64,${ btoa( unescape( encodeURIComponent( html ) ) ) }`;
+		let style: React.CSSProperties;
+		if ( this.state.height ) {
+			style = {
+				height: this.state.height,
+			};
+		} else {
+			style = {
+				opacity: 0
+			};
+		}
+
 		return (
 			<webview
 				ref={ this.updateRef }
 				src={ data }
-				style={ { height: this.state.height } }
+				style={ style }
 				webpreferences={ WEB_PREFERENCES }
 			/>
 		);
