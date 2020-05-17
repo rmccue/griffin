@@ -62,22 +62,21 @@ app.on( 'web-contents-created', ( _, contents ) => {
 	contents.on( 'will-navigate', handleLink );
 	contents.on( 'new-window', handleLink );
 
-	// Calculate the height inside the window, and pass to the renderer.
-	contents.on( 'dom-ready', async () => {
-		// Calculate height in an isolated world.
-		const height = await contents.executeJavaScriptInIsolatedWorld( 240, [
-			{
-				code: 'document.documentElement.scrollHeight',
-			}
-		] );
+	// Receive height from the window, and pass to the renderer.
+	contents.on( 'ipc-message', ( _, channel, value: number | null ) => {
+		if ( channel !== 'SET_HEIGHT' ) {
+			return;
+		}
 
-		appHandler?.send( {
-			event: 'webview-height',
-			data: {
-				id: contents.id,
-				height,
-			},
-		} );
+		if ( value ) {
+			appHandler?.send( {
+				event: 'webview-height',
+				data: {
+					id: contents.id,
+					height: Number( value ),
+				}
+			} );
+		}
 	} );
 
 	// Insert default CSS.

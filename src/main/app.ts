@@ -106,6 +106,13 @@ export default class App {
 		} );
 
 		this.win.webContents.on( 'did-navigate-in-page', this.onNavigate );
+
+		interface AttachWebPreferences extends Electron.WebPreferences {
+			preloadURL: string;
+		}
+		this.win.webContents.on( 'will-attach-webview', ( _, pref, params ) => {
+			( pref as AttachWebPreferences ).preloadURL = `file://${ __dirname }/content-injection.js`;
+		} );
 	}
 
 	async disconnectImap() {

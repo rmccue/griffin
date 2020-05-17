@@ -12,6 +12,9 @@ module.exports = merge.smart(baseConfig, {
             '@babel/polyfill',
             './src/renderer/app.tsx',
         ],
+        'content-injection': [
+            './src/content-injection.js',
+        ],
     },
     module: {
         rules: [

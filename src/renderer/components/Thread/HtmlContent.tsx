@@ -8,7 +8,7 @@ interface Props {
 	html: string;
 }
 
-const WEB_PREFERENCES = 'disableDialogs, javascript=no, webgl=no';
+const WEB_PREFERENCES = 'contextIsolation, disableDialogs, javascript=no, webgl=no';
 
 export default class HtmlContent extends React.Component<Props> {
 	heightListener: number | null = null;
@@ -50,8 +50,6 @@ export default class HtmlContent extends React.Component<Props> {
 		return (
 			<webview
 				ref={ this.updateRef }
-				// @ts-ignore
-				enableremotemodule="false"
 				src={ data }
 				style={ { height: this.state.height } }
 				webpreferences={ WEB_PREFERENCES }
