@@ -74,6 +74,7 @@ export type FrontendInitiatedEvent =
 
 export interface StartGmailOauthCommand {
 	command: 'startGmailOauth',
+	data?: undefined;
 }
 
 export interface VerifyAccountCommand {
