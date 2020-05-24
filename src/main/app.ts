@@ -273,6 +273,9 @@ export default class App {
 			case 'verifyAccount':
 				return await this.accounts.verify( command.data );
 
+			case 'startGmailOauth':
+				return await this.accounts.startGmailOauth();
+
 			default:
 				// const _exhaustiveCheck: never = command;
 				// throw new Error( `Unknown command ${ _exhaustiveCheck }` );

@@ -76,13 +76,21 @@ interface ImapOptions {
 	secure: boolean;
 }
 
+export interface GmailAuth {
+	user: string;
+	token: {
+		access_token: string;
+		refresh_token: string;
+		scope: string;
+		token_type: string;
+		id_token: string;
+		expiry_date: number;
+	};
+}
+
 interface GmailOptions {
 	service: 'gmail';
-	auth: {
-		user: string;
-		pass: string;
-		// token: string;
-	}
+	auth: GmailAuth;
 }
 
 interface OtherConnectionOptions {

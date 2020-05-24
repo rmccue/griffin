@@ -72,9 +72,15 @@ export type FrontendInitiatedEvent =
 	SetReadEvent |
 	SaveEvent;
 
+export interface StartGmailOauthCommand {
+	command: 'startGmailOauth',
+}
+
 export interface VerifyAccountCommand {
 	command: 'verifyAccount',
 	data: ConnectionOptions,
 }
 
-export type Invokable = VerifyAccountCommand;
+export type Invokable =
+	StartGmailOauthCommand |
+	VerifyAccountCommand;

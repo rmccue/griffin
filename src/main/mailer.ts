@@ -79,7 +79,7 @@ export class Mailer extends EventEmitter {
 					secure: true,
 					auth: {
 						user: opts.auth.user,
-						pass: opts.auth.pass,
+						accessToken: opts.auth.token.access_token,
 					},
 				}
 		}

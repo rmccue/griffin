@@ -119,6 +119,7 @@ Object.keys( eventTypes ).forEach( event => {
 type InvokableCommand = Invokable["command"];
 type InvokableCommandObj = Record<InvokableCommand, boolean>;
 const invokableCommands: InvokableCommandObj = {
+	startGmailOauth: true,
 	verifyAccount: true,
 };
 Object.keys( invokableCommands ).forEach( command => {

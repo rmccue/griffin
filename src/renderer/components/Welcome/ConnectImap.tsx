@@ -61,6 +61,9 @@ export default function ConnectImap( props: Props ) {
 		<form
 			onSubmit={ onSubmit }
 		>
+			<h1>Enter account details</h1>
+			<p>We'll need your account details too.</p>
+
 			<FormRow>
 				<label>Username:</label>
 				<TextInput

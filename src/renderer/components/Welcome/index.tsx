@@ -1,6 +1,7 @@
 import sfsymbols from '@rmccue/sfsymbols';
 import React, { useState } from 'react';
 
+import ConnectGmail from './ConnectGmail';
 import ConnectImap from './ConnectImap';
 import ButtonList, { Button } from '../ButtonList';
 import { ConnectionOptions, AccountOptions } from '../../../common/types';
@@ -46,13 +47,17 @@ export default function Welcome() {
 				</div>
 			) : (
 				<div className="Welcome__step">
-					<h1>Enter account details</h1>
-					<p>We'll need your account details too.</p>
-
-					<ConnectImap
-						onCancel={ () => setType( null ) }
-						onCreate={ onAdd }
-					/>
+					{ type === 'gmail' ? (
+						<ConnectGmail
+							onCancel={ () => setType( null ) }
+							onCreate={ onAdd }
+						/>
+					) : (
+						<ConnectImap
+							onCancel={ () => setType( null ) }
+							onCreate={ onAdd }
+						/>
+					) }
 				</div>
 			) }
 		</main>

@@ -1,9 +1,11 @@
+import ElectronGoogleOAuth2 from '@getstation/electron-google-oauth2';
+import fetch from 'node-fetch';
 import { v5 } from 'uuid';
 
 import Account from './account';
 import App from './app';
 import store from './store';
-import { AccountConnectionStatus, AccountOptions, ConnectionOptions } from '../common/types';
+import { AccountConnectionStatus, AccountOptions, ConnectionOptions, GmailAuth } from '../common/types';
 
 const UUID_NAMESPACE = 'de4e7c90-95ed-47d2-8c2f-10a5c08c1991';
 const ACCOUNTS_KEY = 'accounts';
@@ -92,6 +94,51 @@ export default class AccountManager {
 
 		return {
 			error: false,
+		};
+	}
+
+	async startGmailOauth(): Promise<GmailAuth> {
+		const myApiOauth = new ElectronGoogleOAuth2(
+			process.env.GMAIL_CLIENT_ID!,
+			process.env.GMAIL_CLIENT_SECRET!,
+			[
+				'https://mail.google.com/'
+			],
+			{
+				loopbackInterfaceRedirectionPort: 9001,
+				successRedirectURL: 'https://griffin.rmccue.io/connected',
+			}
+		);
+
+		const token = await myApiOauth.openAuthWindowAndGetTokens();
+
+		// Fetch the user's account details.
+		const opts = {
+			headers: {
+				'Authorization': `${ token.token_type } ${ token.access_token }`,
+			},
+		};
+		const profileRes = await fetch( 'https://www.googleapis.com/gmail/v1/users/me/profile', opts );
+		const profile = await profileRes.json();
+		if ( ! profileRes.ok ) {
+			console.log( profile );
+			if ( profile.error ) {
+				console.log( profile.error );
+			}
+
+			throw new Error( 'Could not connect to Gmail' );
+		}
+
+		return {
+			user: profile.emailAddress,
+			token: {
+				access_token: token.access_token!,
+				refresh_token: token.refresh_token!,
+				id_token: token.id_token!,
+				token_type: token.token_type!,
+				expiry_date: token.expiry_date!,
+				scope: ( token as any ).scope,
+			},
 		};
 	}
 

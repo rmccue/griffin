@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron';
 
 import store from './store';
 import { BackendInitiatedEvent, FrontendInitiatedEvent, Invokable } from '../common/ipc';
-import { AccountConnectionStatus, AccountOptions, ConnectionOptions, Message } from '../common/types';
+import { AccountConnectionStatus, AccountOptions, ConnectionOptions, GmailAuth, Message } from '../common/types';
 
 function send( event: FrontendInitiatedEvent ) {
 	ipcRenderer.send( event.event, 'data' in event ? event.data : null );
@@ -130,5 +130,11 @@ export async function verifyAccount( options: ConnectionOptions ): Promise<Accou
 	return await invoke( {
 		command: 'verifyAccount',
 		data: options,
+	} );
+}
+
+export async function startGmailOauth(): Promise<GmailAuth> {
+	return await invoke( {
+		command: 'startGmailOauth',
 	} );
 }
