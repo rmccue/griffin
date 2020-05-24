@@ -28,7 +28,10 @@ export default function ConnectImap( props: Props ) {
 		let connection: ConnectionOptions;
 		if ( type === 'gmail' ) {
 			connection = {
-				service: 'gmail',
+				service: 'imap',
+				host: 'imap.gmail.com',
+				port: 993,
+				secure: true,
 				auth: {
 					user: address,
 					pass: password,
