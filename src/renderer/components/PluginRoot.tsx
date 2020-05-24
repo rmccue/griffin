@@ -59,7 +59,10 @@ export default class PluginRoot extends React.Component<Props> {
 		return (
 			<React.Fragment>
 				{ Object.keys( plugins ).map( id => (
-					<PluginErrorBoundary id={ id }>
+					<PluginErrorBoundary
+						key={ id }
+						id={ id }
+					>
 						<PluginRender
 							key={ id }
 							component={ plugins[ id ] }
