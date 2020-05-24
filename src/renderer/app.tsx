@@ -8,6 +8,7 @@ import { AppContainer } from 'react-hot-loader';
 import { BackendInitiatedEvent } from '../common/ipc';
 import Application from './components/Application';
 import { receive } from './connector';
+import { patchRequire } from './plugin';
 import { Provider as SlotFillProvider } from './slot-fill';
 import store from './store';
 
@@ -17,6 +18,9 @@ import './app.css';
 const mainElement = document.createElement('div');
 mainElement.id = 'main';
 document.body.appendChild( mainElement );
+
+// Prepare plugin infrastructure.
+patchRequire();
 
 // Render components
 const render = ( Component: React.ComponentType ) => {

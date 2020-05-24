@@ -26,6 +26,32 @@ export const pluginRootDir = path.join( remote.app.getPath( 'userData' ), 'plugi
 type FsParams = Parameters<typeof fs.readdir>;
 const readdir: ( path: FsParams[0], options?: FsParams[1] ) => Promise<string[]> = pify( fs.readdir );
 
+function internalRequire( request: string ) {
+	return null;
+}
+
+/**
+ * Patch require for plugins.
+ *
+ * Allows using require( '@rmccue/griffin/...' ) for any internal modules.
+ */
+export function patchRequire() {
+	const Module = __non_webpack_require__( 'module' );
+	const originalLoader = Module._load;
+	Module._load = function ( request: string, parent: any, isMain: any ) {
+		if ( request.startsWith( '@rmccue/griffin/' ) ) {
+			const res = internalRequire( request.substr( 16 ) );
+			if ( res ) {
+				return res;
+			}
+
+			// Fall back to built-in.
+		}
+
+		return originalLoader.apply( this, arguments );
+	};
+}
+
 async function getAvailableForDir( dir: string ): Promise<PluginMap> {
 	const available: PluginMap = {};
 	const entries = await readdir( dir );
