@@ -21,6 +21,7 @@ import './Application.css';
 interface Props {
 	accounts: RootState['accounts']['accounts'];
 	loading: boolean;
+	plugins: RootState['preferences']['plugins'];
 }
 
 const Application = ( props: Props ) => {
@@ -91,7 +92,7 @@ const Application = ( props: Props ) => {
 			</div>
 
 			<PluginRoot
-				enabled={ [] }
+				enabled={ props.plugins }
 			/>
 		</Router>
 	);
@@ -101,6 +102,7 @@ const mapStateToProps = ( state: RootState ) => {
 	return {
 		accounts: state.accounts.accounts,
 		loading: state.accounts.loading,
+		plugins: state.preferences.plugins,
 	};
 }
 

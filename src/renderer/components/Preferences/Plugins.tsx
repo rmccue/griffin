@@ -1,20 +1,25 @@
 import sfsymbols from '@rmccue/sfsymbols';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../Form/Button';
 import Toggle from '../Form/Toggle';
 import Icon from '../Icon';
 import { getAvailable, pluginRootDir, Plugin as PluginData, PluginMap } from '../../plugin';
+import { RootState } from '../../reducers';
+import { PreferencesAction } from '../../../common/actions/preferences';
 
 import './Plugins.css';
 
 type PluginProps = {
 	data: PluginData;
 	enabled: boolean;
+	onActivate(): void;
+	onDeactivate(): void;
 }
 
 function Plugin( props: PluginProps ) {
-	const { data, enabled } = props;
+	const { data, enabled, onActivate, onDeactivate } = props;
 	return (
 		<li
 			className="Preferences-Plugins__plugin"
@@ -35,6 +40,7 @@ function Plugin( props: PluginProps ) {
 					{/* { enabled ? 'Enabled' : 'Disabled' } */}
 					<Toggle
 						checked={ enabled }
+						onChange={ () => enabled ? onDeactivate() : onActivate() }
 					/>
 				</div>
 			</header>
@@ -44,12 +50,12 @@ function Plugin( props: PluginProps ) {
 	)
 }
 
-const enabled = [
-	'foo',
-];
-
 export default function Plugins() {
 	const [ available, setAvailable ] = useState<PluginMap | null>( null );
+	const enabled = useSelector( ( state: RootState ) => state.preferences.plugins );
+	const dispatch = useDispatch<(action: PreferencesAction) => void>();
+	const onActivate = ( id: string ) => dispatch( { type: 'ACTIVATE_PLUGIN', payload: { id } } );
+	const onDeactivate = ( id: string ) => dispatch( { type: 'DEACTIVATE_PLUGIN', payload: { id } } );
 
 	const onLoadAvailable = () => getAvailable().then( available => setAvailable( available ) );
 	useEffect( () => {
@@ -75,6 +81,8 @@ export default function Plugins() {
 							key={ id }
 							data={ available[ id ] }
 							enabled={ enabled.indexOf( id ) >= 0 }
+							onActivate={ () => onActivate( id ) }
+							onDeactivate={ () => onDeactivate( id ) }
 						/>
 					) ) }
 				</ul>

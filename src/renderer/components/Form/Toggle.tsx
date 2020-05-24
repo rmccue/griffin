@@ -4,14 +4,16 @@ import './Toggle.css';
 
 interface Props {
 	checked: boolean;
+	onChange( e: React.ChangeEvent<HTMLInputElement> ): void;
 }
 
 export default function Toggle( props: Props ) {
 	return (
 		<input
-			// checked={ props.checked }
+			checked={ props.checked }
 			className="Form-Toggle"
 			type="checkbox"
+			onChange={ props.onChange }
 		/>
 	);
 }

@@ -3,11 +3,13 @@ import { combineReducers, AnyAction } from 'redux';
 import { Action } from '../../common/actions';
 import accounts from './accounts';
 import messages from './messages';
+import preferences from './preferences';
 import threads from './threads';
 
 const combinedReducers = combineReducers( {
 	accounts,
 	messages,
+	preferences,
 	threads,
 
 	// Add dummy reducer to satisfy the AnyAction type check.
