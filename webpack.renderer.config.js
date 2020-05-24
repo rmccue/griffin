@@ -43,6 +43,7 @@ module.exports = merge.smart(baseConfig, {
                         '@babel/preset-react'
                     ],
                     plugins: [
+                        'macros',
                         ['@babel/plugin-proposal-class-properties', { loose: true }]
                     ]
                 }
@@ -85,6 +86,7 @@ module.exports = merge.smart(baseConfig, {
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+            '__griffin_webpack_ext__': JSON.stringify( baseConfig.resolve.extensions ),
         })
     ]
 });

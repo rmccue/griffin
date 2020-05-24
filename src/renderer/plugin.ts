@@ -4,6 +4,8 @@ import path from 'path';
 import pify from 'pify';
 import React from 'react';
 
+import { overrideRequire } from './plugin/modules';
+
 export interface Plugin {
 	id: string;
 	data: any;
@@ -26,10 +28,6 @@ export const pluginRootDir = path.join( remote.app.getPath( 'userData' ), 'plugi
 type FsParams = Parameters<typeof fs.readdir>;
 const readdir: ( path: FsParams[0], options?: FsParams[1] ) => Promise<string[]> = pify( fs.readdir );
 
-function internalRequire( request: string ) {
-	return null;
-}
-
 /**
  * Patch require for plugins.
  *
@@ -39,13 +37,9 @@ export function patchRequire() {
 	const Module = __non_webpack_require__( 'module' );
 	const originalLoader = Module._load;
 	Module._load = function ( request: string, parent: any, isMain: any ) {
-		if ( request.startsWith( '@rmccue/griffin/' ) ) {
-			const res = internalRequire( request.substr( 16 ) );
-			if ( res ) {
-				return res;
-			}
-
-			// Fall back to built-in.
+		const res = overrideRequire( request );
+		if ( res ) {
+			return res;
 		}
 
 		return originalLoader.apply( this, arguments );
