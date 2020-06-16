@@ -5,7 +5,6 @@
   "description": "An email client.",
   "main": "./dist/main.js",
   "scripts": {
-    "install-wsl": "(test -d node_modules/electron/dist && rm -r node_modules/electron/dist || true) && env npm_config_platform=win32 node node_modules/electron/install.js && electron-builder install-app-deps",
     "build-icns": "iconutil --convert icns --output Griffin.icns icon.iconset/",
     "build-main": "cross-env NODE_ENV=production webpack --config webpack.main.prod.config.js",
     "build-main-dev": "webpack --config webpack.main.config.js",
@@ -14,6 +13,7 @@
     "start-renderer-dev": "webpack-dev-server --config webpack.renderer.dev.config.js",
     "start-main-dev": "webpack --config webpack.main.config.js --watch",
     "start-electron-dev": "env DEBUG='*,-imap:*,-nodemon,-nodemon:*' nodemon --watch dist --exec \"electron\" .",
+    "start-electron-dev:win": "( test -z \"$ELECTRON_OVERRIDE_DIST_PATH\" && echo Electron path required. ) || env WSLENV=DEBUG:ELECTRON_OVERRIDE_DIST_PATH DEBUG='*,-imap:*' electron .",
     "start": "# In three tabs, run: start-renderer-dev, start-main-dev, start-electron-dev",
     "lint": "eslint --ext=jsx,js,tsx,ts src",
     "test": "jest '(\\/test\\/(?!e2e/)).*'",
