@@ -10,6 +10,16 @@ import { Slot } from '../../slot-fill';
 
 import './index.css';
 
+const isWin = true;
+const ICONS = {
+	'sidebar.left': isWin ? '\uE700' : sfsymbols['sidebar.left'],
+	'chevron.left': isWin ? '\uE76B' : sfsymbols['chevron.left'],
+	'chevron.right': isWin ? '\uE76C' :  sfsymbols['chevron.right'],
+	'arrow.counterclockwise.circle': isWin ? '\uE777' : sfsymbols['arrow.counterclockwise.circle'],
+	'arrow.down.cirlce': isWin ? '\uF0AE' : sfsymbols['arrow.down.cirlce'],
+	'gear': isWin ? '\uE713' : sfsymbols['gear'],
+}
+
 interface Props {
 	sidebarVisible: boolean;
 	onShowPreferences(): void;
@@ -24,20 +34,20 @@ export default function Header( props: Props ) {
 		<header className="Header">
 			<Toolbar className="Header__meta-tools">
 				<Button
-					icon={ sfsymbols['sidebar.left'] }
+					icon={ ICONS['sidebar.left'] }
 					title="Open sidebar"
 					onClick={ props.onToggleSidebar }
 				/>
 				<Separator />
 				<Button
 					disabled={ ! historyState.canGoBack }
-					icon={ sfsymbols['chevron.left'] }
+					icon={ ICONS['chevron.left'] }
 					title="Back one page"
 					onClick={ () => history.go( -1 ) }
 				/>
 				<Button
 					disabled={ ! historyState.canGoForward }
-					icon={ sfsymbols['chevron.right'] }
+					icon={ ICONS['chevron.right'] }
 					title="Forward one page"
 					onClick={ () => history.go( 1 ) }
 				/>
@@ -49,17 +59,17 @@ export default function Header( props: Props ) {
 			</div>
 			<Toolbar className="Header__user-tools">
 				<Button
-					icon={ sfsymbols['arrow.counterclockwise.circle'] }
+					icon={ ICONS['arrow.counterclockwise.circle'] }
 					title="Reload"
 					onClick={ () => reload() }
 				/>
 				<Button
-					icon={ sfsymbols['arrow.down.circle'] }
+					icon={ ICONS['arrow.down.circle'] }
 					title="Save"
 					onClick={ () => save() }
 				/>
 				<Button
-					icon={ sfsymbols['gear'] }
+					icon={ ICONS['gear'] }
 					title="Open preferences"
 					onClick={ props.onShowPreferences }
 				/>
