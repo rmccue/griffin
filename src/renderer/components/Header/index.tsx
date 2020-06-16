@@ -1,4 +1,3 @@
-import sfsymbols from '@rmccue/sfsymbols';
 import classNames from 'classnames';
 import React from 'react';
 import { useHistory } from 'react-router';
@@ -6,19 +5,12 @@ import { useHistory } from 'react-router';
 import Toolbar, { Button, Separator } from './Toolbar';
 import { useHistoryState } from '../Router';
 import { reload, save } from '../../connector';
+import { ICONS } from '../../platform';
 import { Slot } from '../../slot-fill';
 
 import './index.css';
 
 const isWin = true;
-const ICONS = {
-	'sidebar.left': isWin ? '\uE700' : sfsymbols['sidebar.left'],
-	'chevron.left': isWin ? '\uE76B' : sfsymbols['chevron.left'],
-	'chevron.right': isWin ? '\uE76C' :  sfsymbols['chevron.right'],
-	'arrow.counterclockwise.circle': isWin ? '\uE777' : sfsymbols['arrow.counterclockwise.circle'],
-	'arrow.down.cirlce': isWin ? '\uF0AE' : sfsymbols['arrow.down.cirlce'],
-	'gear': isWin ? '\uE713' : sfsymbols['gear'],
-}
 
 interface Props {
 	sidebarVisible: boolean;
@@ -34,20 +26,20 @@ export default function Header( props: Props ) {
 		<header className="Header">
 			<Toolbar className="Header__meta-tools">
 				<Button
-					icon={ ICONS['sidebar.left'] }
+					icon={ ICONS['header.toggle-sidebar'] }
 					title="Open sidebar"
 					onClick={ props.onToggleSidebar }
 				/>
 				<Separator />
 				<Button
 					disabled={ ! historyState.canGoBack }
-					icon={ ICONS['chevron.left'] }
+					icon={ ICONS['header.nav-back'] }
 					title="Back one page"
 					onClick={ () => history.go( -1 ) }
 				/>
 				<Button
 					disabled={ ! historyState.canGoForward }
-					icon={ ICONS['chevron.right'] }
+					icon={ ICONS['header.nav-forward'] }
 					title="Forward one page"
 					onClick={ () => history.go( 1 ) }
 				/>
@@ -59,17 +51,17 @@ export default function Header( props: Props ) {
 			</div>
 			<Toolbar className="Header__user-tools">
 				<Button
-					icon={ ICONS['arrow.counterclockwise.circle'] }
+					icon={ ICONS['header.reload'] }
 					title="Reload"
 					onClick={ () => reload() }
 				/>
 				<Button
-					icon={ ICONS['arrow.down.circle'] }
+					icon={ ICONS['header.save'] }
 					title="Save"
 					onClick={ () => save() }
 				/>
 				<Button
-					icon={ ICONS['gear'] }
+					icon={ ICONS['header.preferences'] }
 					title="Open preferences"
 					onClick={ props.onShowPreferences }
 				/>

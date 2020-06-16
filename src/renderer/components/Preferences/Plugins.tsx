@@ -1,10 +1,10 @@
-import sfsymbols from '@rmccue/sfsymbols';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../Form/Button';
 import Toggle from '../Form/Toggle';
 import Icon from '../Icon';
+import { ICONS } from '../../platform';
 import { getAvailable, pluginRootDir, Plugin as PluginData, PluginMap } from '../../plugin';
 import { RootState } from '../../reducers';
 import { PreferencesAction } from '../../../common/actions/preferences';
@@ -29,7 +29,7 @@ function Plugin( props: PluginProps ) {
 					<h2>{ data.data.displayName || data.id }</h2>
 					{ data.type === 'bundled' ? (
 						<abbr title="Included with Griffin">
-							<Icon>{ sfsymbols['cube.box'] }</Icon>
+							<Icon>{ ICONS['plugins.bundled'] }</Icon>
 						</abbr>
 					) : data.data.displayName && (
 						<code className="Preferences-Plugins__plugin-id">{ data.id }</code>
@@ -70,7 +70,7 @@ export default function Plugins() {
 					className="Preferences-Plugins__reload"
 					onClick={ () => onLoadAvailable() }
 				>
-					<Icon>{ sfsymbols['arrow.clockwise.circle'] }</Icon>
+					<Icon>{ ICONS['plugins.reload'] }</Icon>
 				</Button>
 			</header>
 

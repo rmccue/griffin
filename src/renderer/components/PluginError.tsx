@@ -1,9 +1,9 @@
-import sfsymbols from '@rmccue/sfsymbols';
 import React from 'react';
 
 import Button from './Form/Button';
 import Icon from './Icon';
 import { Fill } from '../slot-fill';
+import { ICONS } from '../platform';
 
 import './PluginError.css';
 
@@ -16,7 +16,7 @@ export function PluginError( props: ErrorProps ) {
 	return (
 		<Fill name="Application.footer">
 			<div className="PluginError">
-				<Icon>{ sfsymbols['exclamationmark.triangle.fill'] }</Icon>
+				<Icon>{ ICONS['plugins.error'] }</Icon>
 				<p>Unable to load <code>{ props.id }</code>.</p>
 				<Button onClick={ props.onDismiss }>Dismiss</Button>
 			</div>

@@ -1,4 +1,3 @@
-import sfsymbols from '@rmccue/sfsymbols';
 import classNames from 'classnames';
 import React, { useState } from 'react';
 
@@ -7,6 +6,7 @@ import Plugins from './Plugins';
 import ButtonList, { Button as ListButton } from '../ButtonList';
 import Icon from '../Icon';
 import HeaderToolbar, { Button as HeaderToolbarButton } from '../Header/Toolbar';
+import { ICONS } from '../../platform';
 
 import './index.css';
 
@@ -42,25 +42,25 @@ const SectionLink = ( { icon, selected, title, onSelect }: SectionLinkProps ) =>
 const SECTIONS = [
 	{
 		id: 'general',
-		icon: sfsymbols['gear'],
+		icon: ICONS['preferences.general'],
 		title: 'General',
 		component: General,
 	},
 	{
 		id: 'accounts',
-		icon: sfsymbols['person.crop.circle'],
+		icon: ICONS['preferences.accounts'],
 		title: 'Accounts',
 		component: Placeholder,
 	},
 	{
 		id: 'appearance',
-		icon: sfsymbols['paintbrush'],
+		icon: ICONS['preferences.appearance'],
 		title: 'Appearance',
 		component: Placeholder,
 	},
 	{
 		id: 'plugins',
-		icon: sfsymbols['hammer'],
+		icon: ICONS['preferences.plugins'],
 		title: 'Plugins',
 		component: Plugins,
 	},
@@ -80,7 +80,7 @@ export default function Preferences( props: Props ) {
 			<div className="Preferences__header">
 				<HeaderToolbar>
 					<HeaderToolbarButton
-						icon={ sfsymbols['xmark.circle.fill'] }
+						icon={ ICONS['close'] }
 						title="Close preferences"
 						onClick={ props.onClose }
 					/>

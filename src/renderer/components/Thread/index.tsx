@@ -1,4 +1,3 @@
-import sfsymbols from '@rmccue/sfsymbols';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -7,6 +6,7 @@ import { useLastLocation } from 'react-router-last-location';
 import Message from './Message';
 import Toolbar, { Button as ToolbarButton } from '../Header/Toolbar';
 import { archiveMessages, queryThreadDetails, setRead } from '../../connector';
+import { ICONS } from '../../platform';
 import { RootState } from '../../reducers';
 import { getDetailedMessages, getThreadMessages } from '../../selectors/threads';
 import { Fill, Slot } from '../../slot-fill';
@@ -68,7 +68,7 @@ export function Thread( props: AllProps ) {
 			<Fill name="Header.toolbar">
 				<Toolbar className="Thread__toolbar">
 					<ToolbarButton
-						icon={ sfsymbols['archivebox.fill'] }
+						icon={ ICONS['messages.archive'] }
 						title="Archive message"
 						onClick={ onArchive }
 					/>
@@ -78,12 +78,12 @@ export function Thread( props: AllProps ) {
 					/>
 					{/*
 					<ToolbarButton
-						icon={ sfsymbols['trash.fill'] }
+						icon={ ICONS['messages.trash'] }
 						title="Delete message"
 						onClick={ () => console.log( 'trash' ) }
 					/>
 					<ToolbarButton
-						icon={ sfsymbols['bin.xmark.fill'] }
+						icon={ ICONS['messages.spam'] }
 						title="Mark as spam"
 						onClick={ () => console.log( 'spam' ) }
 					/>
