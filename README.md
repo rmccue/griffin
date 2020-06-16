@@ -35,8 +35,10 @@ Once that's done, you can then start Electron with the following (inside a WSL2 
 # Set the path to the mounted path in WSL of the directory you extracted
 # Electron to. This *must* be a mounted path from your Windows filesystem,
 # otherwise Windows will prevent electron from running with obscure errors/
-env ELECTRON_OVERRIDE_DIST_PATH=/mnt/f/Griffin/electron yarn run start-electron-dev
+env ELECTRON_OVERRIDE_DIST_PATH=/mnt/f/Griffin/electron yarn run start-electron-dev:win
 ```
+
+Note that nodemon is unable to quit Electron, so this command requires manual restarting of Electron on changes.
 
 
 ## Credits
