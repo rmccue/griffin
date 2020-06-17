@@ -283,7 +283,7 @@ export default class App {
 				break;
 
 			case 'restoreWindow':
-				this.win?.restore();
+				this.win?.unmaximize();
 				break;
 
 			case 'closeWindow':
