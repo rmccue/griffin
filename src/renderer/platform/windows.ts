@@ -25,6 +25,6 @@ export const ICONS: typeof ICON_base = {
 	// Window controls
 	'window.minimize': '\uE921',
 	'window.maximize': '\uE922',
-	'window.restore': '\uE922',
+	'window.restore': '\uE923',
 	'window.close': '\uE8BB',
 };
