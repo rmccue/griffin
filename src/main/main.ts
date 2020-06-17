@@ -119,6 +119,10 @@ Object.keys( eventTypes ).forEach( event => {
 type InvokableCommand = Invokable["command"];
 type InvokableCommandObj = Record<InvokableCommand, boolean>;
 const invokableCommands: InvokableCommandObj = {
+	minimizeWindow: true,
+	maximizeWindow: true,
+	restoreWindow: true,
+	closeWindow: true,
 	startGmailOauth: true,
 	verifyAccount: true,
 };

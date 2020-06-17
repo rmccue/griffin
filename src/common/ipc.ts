@@ -77,11 +77,35 @@ export interface StartGmailOauthCommand {
 	data?: undefined;
 }
 
+export interface MinimizeWindowCommand {
+	command: 'minimizeWindow';
+	data?: undefined;
+}
+
+export interface MaximizeWindowCommand {
+	command: 'maximizeWindow';
+	data?: undefined;
+}
+
+export interface RestoreWindowCommand {
+	command: 'restoreWindow';
+	data?: undefined;
+}
+
+export interface CloseWindowCommand {
+	command: 'closeWindow';
+	data?: undefined;
+}
+
 export interface VerifyAccountCommand {
 	command: 'verifyAccount',
 	data: ConnectionOptions,
 }
 
 export type Invokable =
+	MinimizeWindowCommand |
+	MaximizeWindowCommand |
+	RestoreWindowCommand |
+	CloseWindowCommand |
 	StartGmailOauthCommand |
 	VerifyAccountCommand;

@@ -274,6 +274,22 @@ export default class App {
 		log( `invoking ${ command.command }` );
 
 		switch ( command.command ) {
+			case 'minimizeWindow':
+				this.win?.minimize();
+				break;
+
+			case 'maximizeWindow':
+				this.win?.maximize();
+				break;
+
+			case 'restoreWindow':
+				this.win?.restore();
+				break;
+
+			case 'closeWindow':
+				this.win?.close();
+				break;
+
 			case 'verifyAccount':
 				return await this.accounts.verify( command.data );
 
