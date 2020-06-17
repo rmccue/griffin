@@ -13,6 +13,7 @@ import Router from './Router';
 import Sidebar from './Sidebar';
 import Thread from './Thread';
 import Welcome from './Welcome';
+import { id as platformId } from '../platform';
 import { RootState } from '../reducers';
 import { Slot } from '../slot-fill';
 
@@ -39,6 +40,11 @@ const Application = ( props: Props ) => {
 	const loaderClasses = classNames( [
 		'Application__loader',
 		props.loading && 'Application__loader--loading',
+		`platform-${ platformId }`,
+	] );
+	const className = classNames( [
+		'Application',
+		`platform-${ platformId }`,
 	] );
 
 	return (
@@ -51,7 +57,7 @@ const Application = ( props: Props ) => {
 				visible={ showPrefs }
 				onClose={ () => setPrefs( false ) }
 			/>
-			<div className="Application">
+			<div className={ className }>
 				<Header
 					sidebarVisible={ showSidebar }
 					onShowPreferences={ () => setPrefs( true ) }
