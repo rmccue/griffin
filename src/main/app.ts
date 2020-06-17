@@ -1,5 +1,5 @@
 import debug from 'debug';
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import storage from 'electron-json-storage';
 import * as path from 'path';
 import * as url from 'url';
@@ -45,7 +45,7 @@ export default class App {
 	}
 
 	createWindow = () => {
-		this.win = new BrowserWindow( {
+		const opts: BrowserWindowConstructorOptions = {
 			width: 800,
 			height: 600,
 			show: false,
@@ -56,7 +56,11 @@ export default class App {
 			},
 			// titleBarStyle: 'hidden',
 			titleBarStyle: 'hiddenInset',
-		} );
+		};
+		if ( process.env.IS_WINDOWS ) {
+			opts.frame = false;
+		}
+		this.win = new BrowserWindow( opts );
 		this.win.maximize();
 
 		this.win.once( 'ready-to-show', () => {
