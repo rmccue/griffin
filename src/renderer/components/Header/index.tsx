@@ -3,6 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 
 import Toolbar, { Button, Separator } from './Toolbar';
+import WindowControls from './WindowControls';
 import { useHistoryState } from '../Router';
 import { reload, save } from '../../connector';
 import { ICONS } from '../../platform';
@@ -66,6 +67,8 @@ export default function Header( props: Props ) {
 					onClick={ props.onShowPreferences }
 				/>
 			</Toolbar>
+
+			<WindowControls />
 		</header>
 	);
 }

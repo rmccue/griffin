@@ -20,4 +20,10 @@ export const ICONS = {
 	'messages.archive': sfsymbols['archivebox.fill'],
 	'messages.spam': sfsymbols['bin.xmark.fill'],
 	'messages.trash': sfsymbols['trash.fill'],
+
+	// Unused on Mac:
+	'window.minimize': '',
+	'window.maximize': '',
+	'window.restore': '',
+	'window.close': '',
 };

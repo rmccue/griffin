@@ -21,4 +21,10 @@ export const ICONS: typeof ICON_base = {
 	'messages.archive': '\uE7B8', // Fluent-replacement: '\uF03F'
 	'messages.spam': '\uED80', // Fluent-only
 	'messages.trash': '\uE74D',
+
+	// Window controls
+	'window.minimize': '\uE921',
+	'window.maximize': '\uE922',
+	'window.restore': '\uE922',
+	'window.close': '\uE8BB',
 };
