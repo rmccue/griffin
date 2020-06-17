@@ -27,7 +27,7 @@
 /* todo: inactive: rgba( 204, 204, 204, 0.6 ) */
 
 .platform-windows .Header-WindowControls__control:hover {
-	background-color: rgba(87, 44, 44, 0.1);
+	background-color: rgba(255, 255, 255, 0.1);
 }
 
 .platform-windows .Header-WindowControls__close:hover {
