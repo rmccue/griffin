@@ -33,7 +33,8 @@ export default class App {
 		this.onReload();
 
 		// Begin loading messages immediately.
-		this.loadMessages();
+		// this.loadMessages();
+		// TODO: trigger this early to ensure load starts ASAP.
 	}
 
 	createWindow = () => {
