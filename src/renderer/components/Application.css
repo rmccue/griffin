@@ -44,12 +44,16 @@
 
 .Application__loader .Logo {
 	height: 6em;
+	width: auto;
 	color: #fff;
 }
 
 .Application__loader--loading {
 	opacity: 1;
 	pointer-events: all;
+}
+
+.Application__loader--loading .Logo {
 	animation: logo-pulse 1.5s infinite ease-out;
 }
 
