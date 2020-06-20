@@ -207,13 +207,14 @@ export default class App {
 	}
 
 	send( event: BackendInitiatedEvent ) {
+		const name = event.event === 'dispatch' ? `${ event.event }:${ event.data.type }` : event.event;
 		if ( ! this.win || ! this.isReady ) {
-			log( `queueing ${ event.event }` );
+			log( `queueing ${ name }` );
 			this.queue.push( event );
 			return;
 		}
 
-		log( `sending ${ event.event }` );
+		log( `sending ${ name }` );
 		this.win.webContents.send( event.event, event.data );
 	}
 
@@ -223,7 +224,8 @@ export default class App {
 		}
 
 		for ( const event of this.queue ) {
-			log( `sending queued ${ event.event }` );
+			const name = event.event === 'dispatch' ? `${ event.event }:${ event.data.type }` : event.event;
+			log( `sending queued ${ name }` );
 			this.win.webContents.send( event.event, event.data );
 		}
 	}
