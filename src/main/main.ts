@@ -105,6 +105,7 @@ const eventTypes: EventTypeObj = {
     reload: true,
 	save: true,
 	setRead: true,
+	willUnload: true,
 };
 
 Object.keys( eventTypes ).forEach( event => {

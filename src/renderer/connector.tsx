@@ -56,6 +56,12 @@ export function _connect() {
 	return true;
 }
 
+export function willUnload() {
+	send( {
+		event: 'willUnload',
+	} );
+}
+
 export function addAccount( options: AccountOptions ) {
 	send( {
 		event: 'addAccount',

@@ -266,6 +266,10 @@ export default class App {
 				this.accounts.selected()?.setRead( event.data.messages );
 				break;
 
+			case 'willUnload':
+				this.isReady = false;
+				break;
+
 			default:
 				// Force exhaustive type checks.
 				const _exhaustiveCheck: never = event;

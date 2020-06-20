@@ -7,7 +7,7 @@ import { AppContainer } from 'react-hot-loader';
 
 import { BackendInitiatedEvent } from '../common/ipc';
 import Application from './components/Application';
-import { receive } from './connector';
+import { receive, willUnload } from './connector';
 import { patchRequire } from './plugin';
 import { Provider as SlotFillProvider } from './slot-fill';
 import store from './store';
@@ -59,3 +59,6 @@ Object.keys( actionTypes ).forEach( event => {
 		} );
 	} );
 } );
+
+// Let the main process know if we're closing.
+window.addEventListener( 'beforeunload', willUnload );

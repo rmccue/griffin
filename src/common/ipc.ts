@@ -63,6 +63,10 @@ export interface SaveEvent {
 	data: object;
 }
 
+export interface WillUnloadEvent {
+	event: 'willUnload',
+}
+
 export type FrontendInitiatedEvent =
 	AddAccount |
 	ArchiveMessages |
@@ -70,7 +74,8 @@ export type FrontendInitiatedEvent =
 	QueryThreadDetails |
 	ReloadEvent |
 	SetReadEvent |
-	SaveEvent;
+	SaveEvent |
+	WillUnloadEvent;
 
 export interface StartGmailOauthCommand {
 	command: 'startGmailOauth',
