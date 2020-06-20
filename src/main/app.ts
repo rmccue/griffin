@@ -29,14 +29,6 @@ export default class App {
 	async load() {
 		await this.accounts.load();
 
-		this.send( {
-			event: 'dispatch',
-			data: {
-				type: 'LOAD_ACCOUNTS',
-				payload: this.accounts.getData().accounts,
-			},
-		} );
-
 		// Load configuration from storage immediately.
 		this.onReload();
 
@@ -95,14 +87,14 @@ export default class App {
 			return;
 		}
 
-		this.win.webContents.once( 'dom-ready', () => {
+		this.win.webContents.on( 'dom-ready', () => {
 			// Open DevTools, see https://github.com/electron/electron/issues/12438 for why we wait for dom-ready
 			if (process.env.NODE_ENV !== 'production') {
 				this.win?.webContents.openDevTools();
 			}
 
 			this.isReady = true;
-			this.sendQueued();
+			this.onWindowInit();
 		} );
 
 		this.win.on( 'closed', () => {
@@ -117,6 +109,18 @@ export default class App {
 		this.win.webContents.on( 'will-attach-webview', ( _, pref, params ) => {
 			( pref as AttachWebPreferences ).preloadURL = `file://${ __dirname }/content-injection.js`;
 		} );
+	}
+
+	onWindowInit() {
+		this.send( {
+			event: 'dispatch',
+			data: {
+				type: 'LOAD_ACCOUNTS',
+				payload: this.accounts.getData().accounts,
+			},
+		} );
+
+		this.sendQueued();
 	}
 
 	async disconnectImap() {
