@@ -93,7 +93,6 @@ export default class App {
 				this.win?.webContents.openDevTools();
 			}
 
-			this.isReady = true;
 			this.onWindowInit();
 		} );
 
@@ -120,6 +119,7 @@ export default class App {
 			},
 		} );
 
+		this.isReady = true;
 		this.sendQueued();
 	}
 
