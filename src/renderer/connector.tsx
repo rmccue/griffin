@@ -56,6 +56,12 @@ export function _connect() {
 	return true;
 }
 
+export function willUnload() {
+	send( {
+		event: 'willUnload',
+	} );
+}
+
 export function addAccount( options: AccountOptions ) {
 	send( {
 		event: 'addAccount',
@@ -136,5 +142,29 @@ export async function verifyAccount( options: ConnectionOptions ): Promise<Accou
 export async function startGmailOauth(): Promise<GmailAuth> {
 	return await invoke( {
 		command: 'startGmailOauth',
+	} );
+}
+
+export async function minimizeWindow(): Promise<void> {
+	return await invoke( {
+		command: 'minimizeWindow',
+	} );
+}
+
+export async function maximizeWindow(): Promise<void> {
+	return await invoke( {
+		command: 'maximizeWindow',
+	} );
+}
+
+export async function restoreWindow(): Promise<void> {
+	return await invoke( {
+		command: 'restoreWindow',
+	} );
+}
+
+export async function closeWindow(): Promise<void> {
+	return await invoke( {
+		command: 'closeWindow',
 	} );
 }

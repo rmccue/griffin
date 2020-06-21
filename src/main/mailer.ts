@@ -92,6 +92,11 @@ export class Mailer extends EventEmitter {
 	}
 
 	async connect() {
+		if ( this.connected ) {
+			// Already connected, so noop.
+			return;
+		}
+
 		// Wait until client connects and authorizes
 		await this.imap.connect();
 		this.connected = true;

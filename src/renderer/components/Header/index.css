@@ -4,7 +4,6 @@
 	color: var( --color-header-text );
 	padding: 6px 7px;
 	/* padding-top: 26px; */
-	padding-left: 80px;
 	-webkit-app-region: drag;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -13,6 +12,14 @@
 	z-index: 2;
 
 	position: relative;
+}
+
+.platform-mac .Header {
+	padding-left: 80px;
+}
+
+.platform-windows .Header {
+	padding-right: 158px; /* 138px + buffer */
 }
 
 .Header__user-tools {

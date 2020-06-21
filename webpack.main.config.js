@@ -43,6 +43,7 @@ module.exports = merge.smart(baseConfig, {
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
             'process.env.GMAIL_CLIENT_ID': JSON.stringify(process.env.GMAIL_CLIENT_ID),
             'process.env.GMAIL_CLIENT_SECRET': JSON.stringify(process.env.GMAIL_CLIENT_SECRET),
+            'process.env.IS_WINDOWS': 'WSL_INTEROP' in process.env,
         })
     ],
     externals: {

@@ -63,6 +63,10 @@ export interface SaveEvent {
 	data: object;
 }
 
+export interface WillUnloadEvent {
+	event: 'willUnload',
+}
+
 export type FrontendInitiatedEvent =
 	AddAccount |
 	ArchiveMessages |
@@ -70,10 +74,31 @@ export type FrontendInitiatedEvent =
 	QueryThreadDetails |
 	ReloadEvent |
 	SetReadEvent |
-	SaveEvent;
+	SaveEvent |
+	WillUnloadEvent;
 
 export interface StartGmailOauthCommand {
 	command: 'startGmailOauth',
+	data?: undefined;
+}
+
+export interface MinimizeWindowCommand {
+	command: 'minimizeWindow';
+	data?: undefined;
+}
+
+export interface MaximizeWindowCommand {
+	command: 'maximizeWindow';
+	data?: undefined;
+}
+
+export interface RestoreWindowCommand {
+	command: 'restoreWindow';
+	data?: undefined;
+}
+
+export interface CloseWindowCommand {
+	command: 'closeWindow';
 	data?: undefined;
 }
 
@@ -83,5 +108,9 @@ export interface VerifyAccountCommand {
 }
 
 export type Invokable =
+	MinimizeWindowCommand |
+	MaximizeWindowCommand |
+	RestoreWindowCommand |
+	CloseWindowCommand |
 	StartGmailOauthCommand |
 	VerifyAccountCommand;

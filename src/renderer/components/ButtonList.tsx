@@ -1,8 +1,8 @@
-import sfsymbols from '@rmccue/sfsymbols';
 import classNames from 'classnames';
 import React from 'react';
 
 import Icon from './Icon';
+import { ICONS } from '../platform';
 
 import './ButtonList.css';
 
@@ -30,7 +30,7 @@ export const Button = ( { icon, selected, title, withArrow, onSelect }: ButtonPr
 			<Icon>{ icon }</Icon>
 			<span>{ title }</span>
 			{ withArrow && (
-				<Icon>{ sfsymbols['arrow.right.circle'] }</Icon>
+				<Icon>{ ICONS['button.forward'] }</Icon>
 			) }
 		</span>
 	</li>

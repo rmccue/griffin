@@ -1,14 +1,17 @@
-import sfsymbols from '@rmccue/sfsymbols';
 import classNames from 'classnames';
 import React from 'react';
 import { useHistory } from 'react-router';
 
 import Toolbar, { Button, Separator } from './Toolbar';
+import WindowControls from './WindowControls';
 import { useHistoryState } from '../Router';
 import { reload, save } from '../../connector';
+import { ICONS } from '../../platform';
 import { Slot } from '../../slot-fill';
 
 import './index.css';
+
+const isWin = true;
 
 interface Props {
 	sidebarVisible: boolean;
@@ -24,20 +27,20 @@ export default function Header( props: Props ) {
 		<header className="Header">
 			<Toolbar className="Header__meta-tools">
 				<Button
-					icon={ sfsymbols['sidebar.left'] }
+					icon={ ICONS['header.toggle-sidebar'] }
 					title="Open sidebar"
 					onClick={ props.onToggleSidebar }
 				/>
 				<Separator />
 				<Button
 					disabled={ ! historyState.canGoBack }
-					icon={ sfsymbols['chevron.left'] }
+					icon={ ICONS['header.nav-back'] }
 					title="Back one page"
 					onClick={ () => history.go( -1 ) }
 				/>
 				<Button
 					disabled={ ! historyState.canGoForward }
-					icon={ sfsymbols['chevron.right'] }
+					icon={ ICONS['header.nav-forward'] }
 					title="Forward one page"
 					onClick={ () => history.go( 1 ) }
 				/>
@@ -49,21 +52,23 @@ export default function Header( props: Props ) {
 			</div>
 			<Toolbar className="Header__user-tools">
 				<Button
-					icon={ sfsymbols['arrow.counterclockwise.circle'] }
+					icon={ ICONS['header.reload'] }
 					title="Reload"
 					onClick={ () => reload() }
 				/>
 				<Button
-					icon={ sfsymbols['arrow.down.circle'] }
+					icon={ ICONS['header.save'] }
 					title="Save"
 					onClick={ () => save() }
 				/>
 				<Button
-					icon={ sfsymbols['gear'] }
+					icon={ ICONS['header.preferences'] }
 					title="Open preferences"
 					onClick={ props.onShowPreferences }
 				/>
 			</Toolbar>
+
+			<WindowControls />
 		</header>
 	);
 }

@@ -1,5 +1,5 @@
 import debug from 'debug';
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import storage from 'electron-json-storage';
 import * as path from 'path';
 import * as url from 'url';
@@ -29,23 +29,16 @@ export default class App {
 	async load() {
 		await this.accounts.load();
 
-		this.send( {
-			event: 'dispatch',
-			data: {
-				type: 'LOAD_ACCOUNTS',
-				payload: this.accounts.getData().accounts,
-			},
-		} );
-
 		// Load configuration from storage immediately.
 		this.onReload();
 
 		// Begin loading messages immediately.
-		this.loadMessages();
+		// this.loadMessages();
+		// TODO: trigger this early to ensure load starts ASAP.
 	}
 
 	createWindow = () => {
-		this.win = new BrowserWindow( {
+		const opts: BrowserWindowConstructorOptions = {
 			width: 800,
 			height: 600,
 			show: false,
@@ -56,7 +49,11 @@ export default class App {
 			},
 			// titleBarStyle: 'hidden',
 			titleBarStyle: 'hiddenInset',
-		} );
+		};
+		if ( process.env.IS_WINDOWS ) {
+			opts.frame = false;
+		}
+		this.win = new BrowserWindow( opts );
 		this.win.maximize();
 
 		this.win.once( 'ready-to-show', () => {
@@ -91,14 +88,13 @@ export default class App {
 			return;
 		}
 
-		this.win.webContents.once( 'dom-ready', () => {
+		this.win.webContents.on( 'dom-ready', () => {
 			// Open DevTools, see https://github.com/electron/electron/issues/12438 for why we wait for dom-ready
 			if (process.env.NODE_ENV !== 'production') {
 				this.win?.webContents.openDevTools();
 			}
 
-			this.isReady = true;
-			this.sendQueued();
+			this.onWindowInit();
 		} );
 
 		this.win.on( 'closed', () => {
@@ -113,6 +109,19 @@ export default class App {
 		this.win.webContents.on( 'will-attach-webview', ( _, pref, params ) => {
 			( pref as AttachWebPreferences ).preloadURL = `file://${ __dirname }/content-injection.js`;
 		} );
+	}
+
+	onWindowInit() {
+		this.send( {
+			event: 'dispatch',
+			data: {
+				type: 'LOAD_ACCOUNTS',
+				payload: this.accounts.getData().accounts,
+			},
+		} );
+
+		this.isReady = true;
+		this.sendQueued();
 	}
 
 	async disconnectImap() {
@@ -199,13 +208,14 @@ export default class App {
 	}
 
 	send( event: BackendInitiatedEvent ) {
+		const name = event.event === 'dispatch' ? `${ event.event }:${ event.data.type }` : event.event;
 		if ( ! this.win || ! this.isReady ) {
-			log( `queueing ${ event.event }` );
+			log( `queueing ${ name }` );
 			this.queue.push( event );
 			return;
 		}
 
-		log( `sending ${ event.event }` );
+		log( `sending ${ name }` );
 		this.win.webContents.send( event.event, event.data );
 	}
 
@@ -215,7 +225,8 @@ export default class App {
 		}
 
 		for ( const event of this.queue ) {
-			log( `sending queued ${ event.event }` );
+			const name = event.event === 'dispatch' ? `${ event.event }:${ event.data.type }` : event.event;
+			log( `sending queued ${ name }` );
 			this.win.webContents.send( event.event, event.data );
 		}
 	}
@@ -258,6 +269,10 @@ export default class App {
 				this.accounts.selected()?.setRead( event.data.messages );
 				break;
 
+			case 'willUnload':
+				this.isReady = false;
+				break;
+
 			default:
 				// Force exhaustive type checks.
 				const _exhaustiveCheck: never = event;
@@ -270,6 +285,22 @@ export default class App {
 		log( `invoking ${ command.command }` );
 
 		switch ( command.command ) {
+			case 'minimizeWindow':
+				this.win?.minimize();
+				break;
+
+			case 'maximizeWindow':
+				this.win?.maximize();
+				break;
+
+			case 'restoreWindow':
+				this.win?.unmaximize();
+				break;
+
+			case 'closeWindow':
+				this.win?.close();
+				break;
+
 			case 'verifyAccount':
 				return await this.accounts.verify( command.data );
 

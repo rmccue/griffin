@@ -21,6 +21,25 @@ yarn run start-renderer-dev
 yarn run start-electron-dev
 ```
 
+### Development on Windows
+
+When running on Windows, WSL2 is required for your build environment.
+
+After installing Griffin's dependencies and starting the main and renderer build process, you then need to install Electron as a Windows application.
+
+The easiest way to do this is to download [electron-v8.3.2-win32-x64.zip](https://github.com/electron/electron/releases/download/v8.3.2/electron-v8.3.2-win32-x64.zip). Extract this to a directory somewhere (carefully, as it's a tarbomb; ensure you're cd'd into an empty directory if not using a GUI).
+
+Once that's done, you can then start Electron with the following (inside a WSL2 shell):
+
+```sh
+# Set the path to the mounted path in WSL of the directory you extracted
+# Electron to. This *must* be a mounted path from your Windows filesystem,
+# otherwise Windows will prevent electron from running with obscure errors/
+env ELECTRON_OVERRIDE_DIST_PATH=/mnt/f/Griffin/electron yarn run start-electron-dev:win
+```
+
+Note that nodemon is unable to quit Electron, so this command requires manual restarting of Electron on changes.
+
 
 ## Credits
 
