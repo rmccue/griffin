@@ -1,7 +1,10 @@
 import debug from 'debug';
+import { EventEmitter } from 'events';
 import findKey from 'lodash/findKey';
 import keyBy from 'lodash/keyBy';
 import sortBy from 'lodash/sortBy';
+import fetch from 'node-fetch';
+import querystring from 'querystring';
 
 import App from './app';
 import {
@@ -16,21 +19,49 @@ type Mailbox = {
 	threads: Thread[];
 }
 
+type RefreshResponse = {
+	access_token: string;
+	expires_in: number;
+	scope: string;
+	token_type: string;
+	id_token: string;
+}
+
+/**
+ * Refresh tokens when they only have 5 mins remaining.
+ */
+const EXPIRATION_THRESHOLD = 300000;
+const GMAIL_TOKEN_URL = 'https://oauth2.googleapis.com/token';
+
 const log = debug( 'account' );
 
-export default class Account {
+interface Account extends EventEmitter {
+	emit( event: 'updatedOptions' ): boolean;
+	on( event: 'updatedOptions', listener: () => void ): this;
+	once( event: 'updatedOptions', listener: () => void ): this;
+}
+
+class Account extends EventEmitter {
 	app: App;
+	connected: boolean = false;
+	expirationTimer?: NodeJS.Timeout;
 	mailboxes: { [ k: string ]: Mailbox } = {};
-	mailer: Mailer;
+	mailer!: Mailer;
 	options: AccountOptions;
 
 	// Map of unique message ID => UID
 	idMap: { [ k: string ]: number } = {};
 
 	constructor( app: App, options: AccountOptions ) {
+		super();
+
 		this.app = app;
 		this.options = options;
-		this.mailer = new Mailer( options.connection );
+		this.initMailer();
+	}
+
+	private initMailer() {
+		this.mailer = new Mailer( this.options.connection );
 		this.mailer.on( 'close', this.onClose );
 		this.mailer.on( 'delete', this.onDelete );
 		this.mailer.on( 'flags', this.onFlags );
@@ -38,11 +69,101 @@ export default class Account {
 	}
 
 	async connect() {
-		return await this.mailer.connect();
+		await this.checkToken();
+		const res = await this.mailer.connect();
+		this.connected = true;
+		return res;
 	}
 
 	async disconnect() {
+		if ( ! this.connected ) {
+			return;
+		}
+
 		return await this.mailer.disconnect();
+	}
+
+	async checkToken() {
+		if ( this.options.connection.service !== 'gmail' ) {
+			return;
+		}
+
+		const token = this.options.connection.auth.token;
+		if ( ! token.expiry_date ) {
+			// Non-expiring token.
+			return;
+		}
+
+		if ( token.expiry_date <= ( Date.now() - EXPIRATION_THRESHOLD ) ) {
+			// Expired, refresh immediately.
+			log( 'Token expired' );
+			await this.refreshToken();
+		}
+
+		// Schedule for when the next expiration is.
+		const expires = this.options.connection.auth.token.expiry_date - Date.now() - EXPIRATION_THRESHOLD;
+		log( `Token will expire at ${ new Date( Date.now() + expires ) }` );
+		if ( this.expirationTimer ) {
+			clearTimeout( this.expirationTimer );
+		}
+
+		this.expirationTimer = setTimeout( () => {
+			delete this.expirationTimer;
+			this.checkToken();
+		}, expires );
+	}
+
+	async refreshToken() {
+		if ( this.options.connection.service !== 'gmail' ) {
+			return;
+		}
+
+		log( 'Refreshing' );
+		const refresh_token = this.options.connection.auth.token.refresh_token;
+		const data = {
+			client_id: process.env.GMAIL_CLIENT_ID!,
+			client_secret: process.env.GMAIL_CLIENT_SECRET!,
+			grant_type: 'refresh_token',
+			refresh_token,
+		};
+		const opts = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			body: querystring.stringify( data ),
+		};
+		const resp = await fetch( GMAIL_TOKEN_URL, opts );
+		const respData: RefreshResponse = await resp.json();
+		if ( ! resp.ok ) {
+			log( 'Could not refresh token', respData );
+			throw new Error( 'Could not refresh token' );
+		}
+
+		if ( ! respData.access_token ) {
+			log( 'Bad token response', respData );
+			throw new Error( 'Missing critical token information' );
+		}
+
+		// Update the connection details.
+		const nextOptions: AccountOptions = {
+			...this.options,
+			connection: {
+				...this.options.connection,
+				service: 'gmail',
+				auth: {
+					...this.options.connection.auth,
+					token: {
+						...this.options.connection.auth.token,
+						access_token: respData.access_token,
+						expiry_date: Date.now() + ( respData.expires_in * 1000 ),
+					},
+				},
+			},
+		};
+
+		log( 'Refreshed token' );
+		await this.updateAccountOptions( nextOptions );
 	}
 
 	onClose = async () => {
@@ -165,6 +286,28 @@ export default class Account {
 		}
 	}
 
+	async updateAccountOptions( options: AccountOptions ) {
+		const prevOptions = this.options;
+		this.options = options;
+
+		// Reconnect if needed.
+		if ( this.options.connection !== prevOptions.connection ) {
+			const needsReconnect = this.connected;
+			if ( needsReconnect ) {
+				await this.disconnect();
+			}
+
+			this.mailer = null!;
+			this.initMailer();
+
+			if ( needsReconnect ) {
+				await this.connect();
+			}
+		}
+
+		this.emit( 'updatedOptions' );
+	}
+
 	async getMailboxThreads( mailbox: string ) {
 		if ( this.mailboxes[ mailbox ] && this.mailboxes[ mailbox ].threads ) {
 			return this.mailboxes[ mailbox ].threads;
@@ -272,3 +415,5 @@ export default class Account {
 		await this.mailer.deleteMessages( 'INBOX', messages );
 	}
 }
+
+export default Account;
